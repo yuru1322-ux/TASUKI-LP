@@ -1,0 +1,289 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.fv {
+  position: relative;
+  z-index: 0;
+  min-height: 1170px;
+  overflow: hidden;
+  background: linear-gradient(to bottom, $color-pale-pink 0%, $color-white 90.45%);
+
+  // SP は縦に積み、CTA を医療訴求カードの後ろへ回す（order で並べ替え）
+  @include sp {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: 48px 20px;
+    background: $color-pale-pink;
+  }
+
+  // PC の大きな曲線は SP では使わない（SP は写真の上のリボンを使う）
+  &__curve {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+
+    @include sp {
+      display: none;
+    }
+
+    &--pink {
+      top: 449px;
+      z-index: 0;
+    }
+
+    &--red {
+      top: 420px;
+      z-index: 2;
+    }
+  }
+
+  &__accent {
+    color: $color-primary;
+  }
+
+  // SP のリード文は赤字にしない（Figma は全体が黒）
+  &__lead &__accent {
+    @include sp {
+      color: inherit;
+    }
+  }
+
+  // Hero Content（SP では枠を外して、中身を .fv の直下に並べる）
+  &__hero {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    height: 605px;
+
+    @include sp {
+      display: contents;
+    }
+  }
+
+  &__blob {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 262px;
+    height: 227px;
+
+    // SP では枠を外しているため、文字より背面に置く
+    @include sp {
+      z-index: -1;
+    }
+  }
+
+  &__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 20px 0 0 120px;
+    color: $color-text-dark;
+
+    @include sp {
+      display: contents;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 64px;
+    font-weight: $font-weight-bold;
+    line-height: 77px;
+
+    @include sp {
+      order: 1;
+      margin-bottom: 16px;
+      color: $color-text-dark;
+      font-size: 36px;
+      line-height: 43px;
+    }
+  }
+
+  &__lead {
+    margin: 0;
+    font-size: 32px;
+    font-weight: $font-weight-medium;
+    line-height: 38px;
+
+    @include sp {
+      order: 2;
+      margin-bottom: 16px;
+      color: $color-text-dark;
+      font-size: 20px;
+      line-height: 24px;
+    }
+  }
+
+  &__body {
+    margin: 0;
+    font-size: 20px;
+    font-weight: $font-weight-regular;
+    line-height: 24px;
+
+    @include sp {
+      order: 3;
+      margin-bottom: 32px;
+      color: $color-text-dark;
+      font-size: 15px;
+      line-height: 18px;
+    }
+  }
+
+  &__cta {
+    display: flex;
+    gap: 16px;
+    padding: 9px 0;
+    background-color: $color-white;
+
+    @include sp {
+      order: 6;
+      flex-direction: column;
+      gap: 12px;
+      padding: 7px 0;
+      background: none;
+    }
+
+    .button {
+      @include sp {
+        width: 100%;
+      }
+    }
+  }
+
+  // 写真（SP では全幅。リボンを写真の下端に重ねる）
+  &__visual {
+    @include sp {
+      position: relative;
+      order: 4;
+      margin: 0 -20px 32px;
+    }
+  }
+
+  &__photo {
+    position: absolute;
+    top: 0;
+    left: max(756px, calc(100% - 684px));
+    width: 684px;
+    height: 605px;
+
+    @include sp {
+      position: static;
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 375 / 294;
+    }
+  }
+
+  &__ribbon {
+    display: none;
+
+    @include sp {
+      position: absolute;
+      bottom: 1px;
+      left: 0;
+      display: block;
+      width: 100%;
+      height: auto;
+      pointer-events: none;
+    }
+  }
+
+  // Hero Service（SP では白いカード）
+  &__service {
+    position: relative;
+    z-index: 1;
+    padding-top: 99px;
+    color: $color-text-dark;
+
+    @include sp {
+      order: 5;
+      margin-bottom: 32px;
+      padding-top: 0;
+      border-radius: 16px;
+      background-color: $color-white;
+      box-shadow: 0 4px 4px rgba($color-black, 0.25);
+    }
+  }
+
+  &__service-inner {
+    width: 917px;
+    margin: 0 auto;
+    padding: 32px;
+
+    @include sp {
+      width: auto;
+      margin: 0;
+      padding: 28px 24px;
+    }
+  }
+
+  &__service-title {
+    margin: 0;
+    font-size: 40px;
+    font-weight: $font-weight-bold;
+    line-height: 40px;
+
+    @include sp {
+      font-size: 18px;
+      line-height: 22px;
+    }
+  }
+
+  // SP: 英字とその下の和文を改行して2行にする
+  &__service-title &__accent {
+    @include sp {
+      display: block;
+    }
+  }
+
+  &__service-sep {
+    @include sp {
+      display: none;
+    }
+  }
+
+  &__tags {
+    display: grid;
+    grid-template-columns: repeat(3, 215px);
+    gap: 64px 100px;
+    margin: 64px 0 0;
+    padding: 0;
+    list-style: none;
+
+    @include sp {
+      grid-template-columns: repeat(2, 108px);
+      gap: 14px 24px;
+      margin-top: 20px;
+    }
+  }
+
+  &__tag {
+    font-size: 32px;
+    font-weight: $font-weight-regular;
+    line-height: 32px;
+    white-space: nowrap;
+
+    @include sp {
+      font-size: 15px;
+      font-weight: $font-weight-bold;
+      line-height: 18px;
+    }
+  }
+
+  &__tag-num {
+    margin-right: 16px;
+    color: $color-primary;
+    font-weight: $font-weight-bold;
+
+    @include sp {
+      margin-right: 15px;
+    }
+  }
+}

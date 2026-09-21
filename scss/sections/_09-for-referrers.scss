@@ -1,0 +1,219 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.partners {
+  padding: 96px 120px;
+  background-color: $color-white;
+
+  @include sp {
+    padding: 0;
+  }
+
+  // Figma 上で 608px の左カラムと 477px のパネルを横に並べ、全体を中央寄せ
+  // SP は縦に積み、連絡パネルを見出しの直後に回す（order）
+  &__inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 1085px;
+    margin: 0 auto;
+
+    @include sp {
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 22px;
+      width: auto;
+      padding: 40px 20px 48px;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: 32px;
+    width: 608px;
+
+    @include sp {
+      display: contents;
+    }
+  }
+
+  &__main > * {
+    flex-shrink: 0;
+  }
+
+  // 見出しと説明ブロックは、Figma 上で左カラム（608px）より広い 659px
+  &__heading {
+    width: 659px;
+
+    @include sp {
+      width: auto;
+    }
+  }
+
+  &__heading .section-heading__title {
+    @include sp {
+      font-size: 22px;
+      line-height: 33px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 659px;
+    height: 277px;
+
+    @include sp {
+      order: 2;
+      gap: 22px;
+      width: auto;
+      height: auto;
+    }
+  }
+
+  &__body {
+    width: 496px;
+    margin: 0;
+    color: $color-text-secondary;
+    font-size: 20px;
+    font-weight: $font-weight-regular;
+    line-height: 35px;
+
+    @include sp {
+      width: auto;
+      font-size: 14px;
+      line-height: 25px;
+    }
+  }
+
+  // PC では枠を持たず、中身を info の直下に並べる
+  &__target {
+    display: contents;
+
+    @include sp {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+
+  &__target-label {
+    margin: 0;
+    color: $color-primary;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+    line-height: 29px;
+
+    @include sp {
+      font-size: 15px;
+      line-height: 18px;
+    }
+  }
+
+  &__target-list {
+    width: 559px;
+    margin: 0;
+    color: $color-text-secondary;
+    font-size: 20px;
+    font-weight: $font-weight-regular;
+    line-height: 40px;
+
+    @include sp {
+      width: auto;
+      font-size: 13.5px;
+      line-height: 24px;
+    }
+  }
+
+  // 連絡パネル
+  &__cta {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 43px;
+    box-sizing: border-box;
+    width: 477px;
+    height: 544px;
+    padding: 44px 36px;
+    border-radius: 16px;
+    background-color: $color-pale-red;
+
+    @include sp {
+      order: 1;
+      justify-content: flex-start;
+      gap: 10px;
+      width: auto;
+      height: auto;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: $color-pale-pink;
+    }
+
+    .button {
+      @include sp {
+        width: 100%;
+        font-size: 16px;
+        line-height: 19px;
+      }
+    }
+  }
+
+  &__cta-label {
+    margin: 0;
+    color: $color-text-meta;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+    line-height: 29px;
+
+    @include sp {
+      font-size: 15px;
+      line-height: 18px;
+    }
+  }
+
+  &__tel {
+    margin: 0;
+    color: $color-primary;
+    font-size: 32px;
+    font-weight: $font-weight-bold;
+    line-height: 38px;
+
+    @include sp {
+      font-size: 24px;
+      line-height: 29px;
+    }
+  }
+
+  // SP は番号だけを表示する（[電話番号：〜] の飾りは PC のみ）
+  &__tel-affix {
+    @include sp {
+      display: none;
+    }
+  }
+
+  &__tel-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &__hours {
+    margin: 0;
+    color: $color-text-meta;
+    font-size: 20px;
+    font-weight: $font-weight-bold;
+    line-height: 24px;
+    // Figma 上でも文字幅（408px）がパネルの内寸（405px）を超えるが、折り返さない
+    white-space: nowrap;
+
+    @include sp {
+      font-size: 13px;
+      line-height: 16px;
+    }
+  }
+}

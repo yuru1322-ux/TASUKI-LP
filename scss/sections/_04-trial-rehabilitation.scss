@@ -1,0 +1,197 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.trial {
+  padding: 50px 120px 63px;
+  background: $gradient-primary;
+
+  @include sp {
+    padding: 28px 42px 81px;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    max-width: $content-max-width;
+    margin: 0 auto;
+
+    @include sp {
+      gap: 22px;
+    }
+
+    // SP は英字タイトル行の幅が本文の列より6px広い（左右に3pxずつはみ出す）
+    .section-heading {
+      @include sp {
+        margin: 0 -3px;
+      }
+    }
+  }
+
+  &__content {
+    position: relative;
+    display: flex;
+    gap: 64px;
+    height: 480px;
+
+    @include sp {
+      flex-direction: column;
+      gap: 22px;
+      height: auto;
+    }
+  }
+
+  &__copy {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: 50px;
+    width: 544px;
+    color: $color-white;
+
+    @include sp {
+      gap: 22px;
+      width: auto;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 36px;
+    font-weight: $font-weight-bold;
+    line-height: 43px;
+
+    @include sp {
+      font-size: 24px;
+      line-height: 29px;
+    }
+  }
+
+  &__body {
+    font-size: 16px;
+    font-weight: $font-weight-medium;
+    line-height: 30px;
+
+    @include sp {
+      font-size: 14px;
+      line-height: 17px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    p + p {
+      margin-top: 30px;
+
+      @include sp {
+        margin-top: 17px;
+      }
+    }
+  }
+
+  &__cta {
+    height: 71px;
+
+    @include sp {
+      height: auto;
+    }
+
+    .button {
+      @include sp {
+        width: 100%;
+      }
+    }
+  }
+
+  &__photo {
+    display: block;
+    flex: none;
+    width: 592px;
+    height: 480px;
+    object-fit: cover;
+
+    @include sp {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 291 / 396;
+      border-radius: 8px;
+    }
+  }
+
+  // SP は写真と同じ大きさの枠にして、吹き出しを写真基準で配置する
+  &__chips {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include sp {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      aspect-ratio: 291 / 396;
+      pointer-events: none;
+    }
+  }
+
+  // 写真上の吹き出し（3つとも Figma 上で絶対配置）
+  &__chip {
+    position: absolute;
+    box-sizing: border-box;
+    width: 200px;
+    padding: 12px 16px;
+    border: 3px solid rgba($color-chip-accent, 0.75);
+    border-radius: 10px;
+    background-color: $color-white;
+    box-shadow: 4px 4px 4px rgba($color-black, 0.25);
+    color: $color-text-secondary;
+    font-size: 13.5px;
+    font-weight: $font-weight-bold;
+    line-height: 16px;
+
+    @include sp {
+      width: 156px;
+      padding: 9px 13px;
+      box-shadow: 3px 3px 4px rgba($color-black, 0.25);
+      color: $color-text-dark;
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    &--1 {
+      top: 8px;
+      left: 592px;
+
+      @include sp {
+        top: 31px;
+        left: -25px;
+      }
+    }
+
+    &--2 {
+      top: 206px;
+      left: 986px;
+
+      @include sp {
+        top: 191px;
+        right: -25px;
+        left: auto;
+      }
+    }
+
+    &--3 {
+      top: 334px;
+      left: 673px;
+
+      @include sp {
+        top: 321px;
+        left: 4px;
+      }
+    }
+  }
+
+  &__chip-mark {
+    color: $color-rehab-orange;
+  }
+}

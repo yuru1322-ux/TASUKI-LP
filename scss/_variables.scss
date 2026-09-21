@@ -1,0 +1,41 @@
+// Colors
+$color-primary:        #D84A43; // Primary CTA, 看護カード枠, 見出しライン, CASE番号
+$color-primary-dark:   #A32923; // 赤系セクション（04, 08, 10）のグラデーション終端（3セクション共通に統一）
+$color-coral:          #F97265; // 英字セクションタイトル（opacity 85%運用）
+$color-rehab-orange:   #E98A4A; // リハビリ領域の補助アクセント
+$color-pale-pink:      #FFF8F8; // 03_Cases等の背景
+$color-text-primary:   #232323; // H1/H2, 本文主要文字
+$color-pale-red:       #FFEFEF; // 09_For_Referrers の連絡パネル背景（Figma実測）
+$color-text-dark:      #242424; // FVの見出し・本文・医療訴求（Figma変数の実測値）
+$color-text-secondary: #444444; // カード説明文
+$color-text-meta:      #6B6B6B; // 補足テキスト
+$color-text-gray:      #727272; // 06_Medical_Coverage 受付時間（Figma実測）
+$color-border:         #D9D9D9; // 06_Medical_Coverage CTA行の上下線（Figma実測）
+$color-divider:        #EEE2E2; // 05_Strengths SP 強み同士の区切り線（Figma実測）
+$color-line-pale:      #F0E4E4; // 06_Medical_Coverage SP CTA行の上下線（Figma実測）
+$color-line-connector: #D9C9C9; // 08_On-call SP ステップ間の縦線（Figma実測）
+$color-cross:          #A4A4A4; // 02_Services 中央の「×」（Figma実測）
+$color-connector:      #B7B0B0; // 02_Services SP 中央の菱形の線（Figma実測）
+$color-chip-accent:    #FF6700; // 04_Trial_Rehabilitation 吹き出しの枠（Figma実測の吹き出し1に3つを統一）
+$color-white:          #FFFFFF;
+$color-black:          #000000; // 影の色（rgbaで透過して使用）
+
+// Gradients
+$gradient-primary: linear-gradient(to bottom, $color-primary, $color-primary-dark);
+
+// Typography
+$font-family-base: "Noto Sans JP", sans-serif;
+$font-family-number: "Roboto", sans-serif; // 05_Strengths PC のゴースト数字のみ
+
+$font-weight-regular: 400;
+$font-weight-medium:  500;
+$font-weight-bold:    700;
+
+// Layout
+$content-max-width: 1200px;
+$content-padding-pc: 120px;
+$content-padding-sp: 20px;
+
+// Breakpoints
+$breakpoint-sp: 375px;
+$breakpoint-pc: 1440px;

@@ -1,0 +1,365 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.staff {
+  position: relative;
+  min-height: 1495px;
+  padding-top: 96px;
+  overflow: hidden;
+  background-color: $color-white;
+
+  // SP は下端の波（53px）の分だけ余白を残す
+  @include sp {
+    min-height: 0;
+    padding: 0 0 53px;
+  }
+
+  &__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    max-width: $content-max-width;
+    margin: 0 auto;
+
+    @include sp {
+      gap: 24px;
+      max-width: none;
+      padding: 40px 20px 48px;
+    }
+  }
+
+  // SP のカードの間に区切り線はない
+  &__divider {
+    height: 1px;
+    margin: 0;
+    border: 0;
+    background-color: rgba($color-primary, 0.15);
+
+    @include sp {
+      display: none;
+    }
+  }
+
+  &__wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+  }
+}
+
+// 管理者
+.staff-feature {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  height: 340px;
+
+  // SP はカード（白・薄い枠・影）。写真の上に文章を積む
+  @include sp {
+    display: block;
+    height: auto;
+    border: 1px solid $color-divider;
+    border-radius: 10px;
+    background-color: $color-white;
+    box-shadow: 2px 2px 6px rgba($color-black, 0.08);
+    overflow: hidden;
+  }
+
+  &__photo {
+    display: block;
+    flex: none;
+    width: 420px;
+    height: 340px;
+    object-fit: cover;
+
+    @include sp {
+      width: calc(100% + 2px);
+      height: auto;
+      aspect-ratio: 1;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: 14px;
+    width: 724px;
+
+    @include sp {
+      gap: 10px;
+      width: auto;
+      margin-right: -2px;
+      padding: 18px;
+      background-color: $color-pale-pink;
+    }
+  }
+
+  &__role {
+    margin: 0;
+    color: $color-primary;
+    font-size: 12px;
+    font-weight: $font-weight-bold;
+    line-height: 14px;
+  }
+
+  &__quote {
+    margin: 0;
+    color: $color-text-primary;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+    line-height: 29px;
+
+    @include sp {
+      font-size: 19px;
+    }
+  }
+
+  &__bio {
+    width: 620px;
+    margin: 0;
+    color: $color-text-secondary;
+    font-size: 14px;
+    font-weight: $font-weight-regular;
+    line-height: 17px;
+
+    @include sp {
+      width: auto;
+      font-size: 12.5px;
+      line-height: 21px;
+    }
+  }
+}
+
+// スタッフ4名（縦区切り線は、2人目以降の左側に擬似要素で描く）
+.staff-strip {
+  display: flex;
+  gap: 57px;
+  height: 380px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include sp {
+    flex-direction: column;
+    gap: 24px;
+    height: auto;
+  }
+}
+
+.staff-member {
+  position: relative;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 10px;
+  width: 257.25px;
+
+  // SP は管理者と同じカード
+  @include sp {
+    display: block;
+    width: auto;
+    border: 1px solid $color-divider;
+    border-radius: 10px;
+    background-color: $color-white;
+    box-shadow: 2px 2px 6px rgba($color-black, 0.08);
+    overflow: hidden;
+  }
+
+  & + &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -29px;
+    width: 1px;
+    height: 380px;
+    background-color: rgba($color-primary, 0.15);
+
+    @include sp {
+      display: none;
+    }
+  }
+
+  // PC では枠を持たず、中身を li の直下に並べる
+  &__body {
+    display: contents;
+
+    @include sp {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-right: -2px;
+      padding: 18px;
+      background-color: $color-white;
+    }
+  }
+
+  // Figma の写真は、正方形の元画像を上部寄りにトリミングしている
+  &__photo {
+    display: block;
+    width: 257px;
+    height: 168px;
+    object-fit: cover;
+
+    // SP の写真は正方形（元画像そのまま）
+    @include sp {
+      width: calc(100% + 2px);
+      height: auto;
+      aspect-ratio: 1;
+    }
+  }
+
+  &--1 &__photo {
+    object-position: 50% 37.78%;
+  }
+
+  &--2 &__photo {
+    object-position: 50% 35.34%;
+  }
+
+  &--3 &__photo {
+    object-position: 50% 50%;
+  }
+
+  &--4 &__photo {
+    object-position: 50% 30.45%;
+  }
+
+  &__role {
+    margin: 0;
+    color: $color-primary;
+    font-size: 11px;
+    font-weight: $font-weight-bold;
+    line-height: 13px;
+
+    @include sp {
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+
+  &__quote {
+    margin: 0;
+    color: $color-text-primary;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
+    line-height: 19px;
+
+    @include sp {
+      font-size: 17px;
+      line-height: 26px;
+    }
+  }
+
+  &__bio {
+    margin: 0;
+    color: $color-text-secondary;
+    font-size: 12.5px;
+    font-weight: $font-weight-regular;
+    line-height: 22px;
+
+    @include sp {
+      line-height: 21px;
+    }
+  }
+}
+
+// 医療事務・地域連携
+.staff-office {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  height: 96px;
+
+  // SP は他のスタッフと同じカード（写真は円形）
+  @include sp {
+    display: block;
+    height: auto;
+    border: 1px solid $color-divider;
+    border-radius: 10px;
+    background-color: $color-white;
+    box-shadow: 2px 2px 6px rgba($color-black, 0.08);
+    overflow: hidden;
+  }
+
+  &__photo {
+    display: block;
+    flex: none;
+    width: 96px;
+    height: 96px;
+    border-radius: 100px;
+    object-fit: cover;
+
+    @include sp {
+      width: calc(100% + 2px);
+      height: auto;
+      aspect-ratio: 1;
+      border-radius: 50%;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: 4px;
+    width: 871px;
+
+    @include sp {
+      gap: 10px;
+      width: auto;
+      margin-right: -2px;
+      padding: 18px;
+    }
+  }
+
+  // SP は肩書き（コーラル）と一言（太字）を別の行にする
+  &__title {
+    margin: 0;
+    color: $color-text-primary;
+    font-size: 14.5px;
+    font-weight: $font-weight-bold;
+    line-height: 17px;
+
+    @include sp {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 15px;
+      line-height: 23px;
+    }
+  }
+
+  &__role {
+    @include sp {
+      color: $color-coral;
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+
+  &__sep {
+    @include sp {
+      display: none;
+    }
+  }
+
+  &__body {
+    margin: 0;
+    color: $color-text-secondary;
+    font-size: 13px;
+    font-weight: $font-weight-regular;
+    line-height: 16px;
+
+    @include sp {
+      color: $color-text-meta;
+      font-size: 12.5px;
+      line-height: 21px;
+    }
+  }
+}

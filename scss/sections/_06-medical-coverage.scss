@@ -1,0 +1,294 @@
+@use "sass:string";
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.coverage {
+  position: relative;
+  min-height: 1237px;
+  padding-top: 128px;
+  overflow: hidden;
+  background-color: $color-white;
+
+  // SP は上の波を本文の前に置き、下の波の分（53px）だけ下に余白を残す
+  @include sp {
+    min-height: 0;
+    padding: 0 0 53px;
+  }
+
+  &__wave {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+
+    &--top {
+      top: 0;
+
+      @include sp {
+        position: static;
+        display: block;
+      }
+    }
+
+    &--bottom {
+      bottom: 0;
+    }
+  }
+
+  // Figma 上で Inner は 1268px 幅（見出しは内側で 1200px）
+  &__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 46px;
+    width: 1268px;
+    margin: 0 auto;
+    padding: 23px 0;
+
+    @include sp {
+      align-items: stretch;
+      gap: 22px;
+      width: auto;
+      padding: 40px 20px 48px;
+    }
+  }
+
+  &__columns {
+    display: flex;
+    justify-content: center;
+    gap: 130px;
+    width: 100%;
+    height: 367px;
+
+    @include sp {
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      height: auto;
+    }
+  }
+
+  &__card {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: 18px;
+    box-sizing: border-box;
+    height: 367px;
+    border-radius: 16px;
+    background-color: $color-pale-pink;
+
+    // SP は枠からはみ出た文字を切り取る（Figma の枠と同じ）
+    @include sp {
+      gap: 12px;
+      width: 300px;
+      height: auto;
+      padding: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    &--procedures {
+      width: 404px;
+      padding: 12px;
+
+      @include sp {
+        width: 300px;
+        padding: 20px;
+      }
+    }
+
+    &--diseases {
+      width: 410px;
+      padding: 14px 10px;
+
+      @include sp {
+        width: 300px;
+        padding: 20px;
+      }
+    }
+  }
+
+  &__tag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    margin: 0;
+    border-radius: 10px;
+    background-color: $color-primary;
+    color: $color-white;
+    font-size: 19px;
+    font-weight: $font-weight-bold;
+    line-height: 23px;
+
+    @include sp {
+      align-self: flex-start;
+      height: auto;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+
+  &__card--procedures &__tag {
+    width: 271px;
+
+    @include sp {
+      width: auto;
+    }
+  }
+
+  &__card--diseases &__tag {
+    width: 264px;
+
+    @include sp {
+      width: auto;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 0 20px;
+    list-style: none;
+
+    @include sp {
+      gap: 9px;
+      padding: 0;
+    }
+  }
+
+  &__card--procedures &__list {
+    height: 285px;
+
+    @include sp {
+      height: auto;
+    }
+  }
+
+  &__card--diseases &__list {
+    height: 276px;
+
+    @include sp {
+      height: auto;
+    }
+  }
+
+  &__item {
+    color: $color-text-secondary;
+    font-size: 20px;
+    font-weight: $font-weight-regular;
+    line-height: 46px;
+
+    @include sp {
+      display: flex;
+      gap: 6px;
+      font-size: 14px;
+      line-height: 22px;
+      white-space: nowrap;
+    }
+
+    &::before {
+      content: "\2212\20";
+      // 対応ブラウザでは装飾として読み上げ対象から外す
+      content: string.unquote('"\\2212\\20" / ""');
+
+      // SP は赤い太字のダッシュを文字の前に独立して置く
+      @include sp {
+        content: "\2212";
+        content: string.unquote('"\\2212" / ""');
+        flex: none;
+        color: $color-primary;
+        font-weight: $font-weight-bold;
+        line-height: 17px;
+      }
+    }
+  }
+
+  &__note {
+    margin: 0;
+    color: $color-text-meta;
+    font-size: 20px;
+    font-weight: $font-weight-regular;
+    line-height: 24px;
+    text-align: center;
+
+    @include sp {
+      font-size: 12.5px;
+      line-height: 20px;
+      text-align: left;
+    }
+  }
+
+  &__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 102px;
+    border-top: 1px solid $color-border;
+    border-bottom: 1px solid $color-border;
+
+    // SP は電話（左）とボタン（右）を両端に置く
+    @include sp {
+      justify-content: space-between;
+      gap: 0;
+      height: auto;
+      padding: 15px 0;
+      border-color: $color-line-pale;
+    }
+
+    .button {
+      @include sp {
+        width: auto;
+        height: 40px;
+        padding: 12px 18px;
+        box-shadow: none;
+        font-size: 13px;
+        line-height: 16px;
+      }
+    }
+  }
+
+  &__tel {
+    width: 194px;
+    margin: 0;
+    color: $color-text-gray;
+    font-size: 18px;
+    font-weight: $font-weight-bold;
+    line-height: 22px;
+
+    @include sp {
+      width: auto;
+      color: $color-text-meta;
+      font-size: 11px;
+      font-weight: $font-weight-regular;
+      line-height: 13px;
+    }
+  }
+
+  &__tel-number {
+    color: $color-primary;
+
+    @include sp {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 15px;
+      font-weight: $font-weight-bold;
+      line-height: 18px;
+    }
+  }
+
+  &__tel-link {
+    color: inherit;
+    text-decoration: none;
+  }
+}

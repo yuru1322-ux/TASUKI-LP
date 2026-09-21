@@ -1,0 +1,428 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.strengths {
+  padding: 96px 120px;
+  background-color: $color-white;
+
+  // 下端の赤い帯（波）は 06 側に置く
+  @include sp {
+    padding: 40px 20px 48px;
+  }
+
+  &__inner {
+    max-width: $content-max-width;
+    margin: 0 auto;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+
+    // 強みの間に区切り線（1px）を挟む
+    @include sp {
+      gap: 53px;
+    }
+  }
+}
+
+.strength {
+  position: relative;
+
+  // SP は縦に積む（先頭に数字の分の余白8px）
+  @include sp {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+    width: auto;
+    height: auto;
+    padding: 8px 0 0;
+  }
+
+  & + &::before {
+    @include sp {
+      content: "";
+      position: absolute;
+      top: -27px;
+      right: 0;
+      left: 0;
+      height: 1px;
+      background-color: $color-divider;
+    }
+  }
+
+  // 強み01・02は Figma 上で 1234px 幅（内側の1200pxより34px広い）
+  &--01,
+  &--02 {
+    width: 1234px;
+  }
+
+  &--01 {
+    display: flex;
+    height: 480px;
+    padding: 76px 0;
+
+    @include sp {
+      height: auto;
+      padding: 8px 0 0;
+    }
+  }
+
+  &--02 {
+    display: flex;
+    align-items: center;
+    gap: 140px;
+    height: 499px;
+    padding: 25px 0;
+
+    @include sp {
+      align-items: stretch;
+      gap: 12px;
+      height: auto;
+      padding: 8px 0 0;
+    }
+  }
+
+  &--03 {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    width: 1200px;
+    padding: 20px 0;
+
+    @include sp {
+      align-items: stretch;
+      gap: 12px;
+      width: auto;
+      padding: 8px 0 0;
+    }
+  }
+
+  // SP の強み01・02の幅は本文の列と同じ
+  &--01,
+  &--02 {
+    @include sp {
+      width: auto;
+    }
+  }
+
+  // ゴースト数字（Figma: Roboto Bold 200px、コーラル25%）。文字より背面に置く
+  &__number {
+    position: absolute;
+    font-family: $font-family-number;
+    font-size: 200px;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.06em;
+    line-height: 234px;
+    white-space: nowrap;
+    color: rgba($color-coral, 0.25);
+    pointer-events: none;
+    user-select: none;
+
+    // SP（Noto Sans JP Bold 72px、コーラル18%、右揃え）
+    @include sp {
+      width: 100%;
+      font-family: $font-family-base;
+      font-size: 72px;
+      letter-spacing: 0;
+      line-height: 86px;
+      text-align: right;
+      color: rgba($color-coral, 0.18);
+    }
+  }
+
+  &--01 &__number {
+    top: -52px;
+    left: 464px;
+  }
+
+  &--02 &__number {
+    top: -74.5px;
+    left: 278px;
+  }
+
+  &--03 &__number {
+    top: -32px;
+    left: 402px;
+  }
+
+  &--01 &__number,
+  &--02 &__number,
+  &--03 &__number {
+    @include sp {
+      top: -14px;
+      left: 0;
+    }
+  }
+
+  // SP は枠を外して、中身を .strength の直下に並べる
+  &__text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    @include sp {
+      display: contents;
+    }
+  }
+
+  &--01 &__text {
+    flex: none;
+    gap: 10px;
+    width: 617px;
+    padding: 26px 0;
+  }
+
+  &--02 &__text {
+    flex: none;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    width: 620px;
+    height: 194px;
+    padding-right: 100px;
+  }
+
+  &--03 &__text {
+    flex: none;
+    gap: 16px;
+    width: 620px;
+  }
+
+  // ゴースト数字の前面に出す
+  &__text > *:not(.strength__number) {
+    position: relative;
+  }
+
+  &__headline {
+    margin: 0;
+    color: $color-text-primary;
+    font-size: 36px;
+    font-weight: $font-weight-bold;
+    line-height: 43px;
+
+    @include sp {
+      font-size: 20px;
+      line-height: 30px;
+    }
+  }
+
+  &--01 &__headline {
+    line-height: 50px;
+
+    @include sp {
+      line-height: 30px;
+    }
+  }
+
+  &--03 &__headline {
+    font-size: 40px;
+    line-height: 58px;
+
+    @include sp {
+      font-size: 20px;
+      line-height: 30px;
+    }
+  }
+
+  &__body {
+    margin: 0;
+    color: $color-text-secondary;
+    font-size: 20px;
+    font-weight: $font-weight-regular;
+    line-height: 35px;
+
+    @include sp {
+      font-size: 14px;
+      line-height: 25px;
+    }
+  }
+
+  &--02 &__body {
+    @include sp {
+      line-height: 17px;
+    }
+  }
+
+  &--03 &__body {
+    line-height: 24px;
+
+    @include sp {
+      line-height: 25px;
+    }
+  }
+
+  &__label {
+    margin: 0;
+    color: $color-primary;
+    font-size: 32px;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.08em;
+    line-height: 38px;
+
+    @include sp {
+      font-size: 15px;
+      letter-spacing: 0.1em;
+      line-height: 18px;
+    }
+  }
+
+  // SP は循環図の後ろに回す（order）
+  &__lead {
+    margin: 0;
+    color: $color-primary;
+    font-size: 28px;
+    font-weight: $font-weight-medium;
+    line-height: 34px;
+
+    @include sp {
+      order: 1;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  &__note {
+    margin: 0;
+    color: $color-text-secondary;
+    font-size: 20px;
+    font-weight: $font-weight-regular;
+    line-height: 34px;
+
+    @include sp {
+      order: 1;
+      font-size: 13.5px;
+      line-height: 23px;
+    }
+  }
+
+  // 強み01：イラスト＋タグ
+  &__visual {
+    position: relative;
+    flex: none;
+    width: 617px;
+    height: 383px;
+
+    @include sp {
+      width: auto;
+      height: 208px;
+    }
+  }
+
+  &--01 &__img {
+    position: absolute;
+    top: 0;
+    left: 177px;
+    width: 383px;
+    height: 383px;
+
+    @include sp {
+      left: 96px;
+      width: 208px;
+      height: 208px;
+    }
+  }
+
+  // SP は本文の後ろに回す（DOM 上は先頭）
+  &--02 &__img {
+    display: block;
+    flex: none;
+    width: 474px;
+    height: 474px;
+
+    @include sp {
+      order: 1;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1;
+    }
+  }
+
+  &__tags {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__tag {
+    position: absolute;
+    box-sizing: border-box;
+    width: 140px;
+    height: 37px;
+    padding-top: 5px;
+    border-radius: 16px;
+    background-color: $color-primary;
+    color: $color-white;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
+    line-height: 28px;
+    text-align: center;
+
+    // SP は文字幅に合わせた小さなタグ
+    @include sp {
+      width: auto;
+      height: auto;
+      padding: 5px 10px;
+      border-radius: 14px;
+      font-size: 11px;
+      line-height: 13px;
+      white-space: nowrap;
+    }
+
+    &--1 {
+      top: 29px;
+      left: 154px;
+
+      @include sp {
+        top: 16px;
+        left: 84px;
+      }
+    }
+
+    &--2 {
+      top: 110px;
+      left: 230px;
+
+      @include sp {
+        top: 60px;
+        left: 125px;
+      }
+    }
+
+    &--3 {
+      top: 192px;
+      left: 120px;
+
+      @include sp {
+        top: 104px;
+        left: 65px;
+      }
+    }
+
+    &--4 {
+      top: 274px;
+      left: 230px;
+
+      @include sp {
+        top: 149px;
+        left: 125px;
+      }
+    }
+  }
+
+  // 強み03：循環図
+  &__cycle {
+    display: block;
+    flex: none;
+    width: 473px;
+    height: 380px;
+
+    @include sp {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 335 / 269;
+    }
+  }
+}

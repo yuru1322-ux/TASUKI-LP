@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="説明文">
+  <title>タイトル</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/script.js" defer></script>
+</head>
+<body>
+
+  <!-- 00 Header -->
+  <header class="header">
+    <div class="header__inner">
+      <div class="header__main">
+        <a class="header__logo" href="#">
+          <span class="header__logo-name">TASUKI</span>
+          <span class="header__logo-caption">訪問看護ステーション</span>
+        </a>
+        <nav class="header__nav" aria-label="メインナビゲーション">
+          <ul class="header__nav-list">
+            <li class="header__nav-item"><a class="header__nav-link" href="#services">サービス</a></li>
+            <li class="header__nav-item"><a class="header__nav-link" href="#strengths">TASUKIの強み</a></li>
+            <li class="header__nav-item"><a class="header__nav-link" href="#coverage">対応範囲</a></li>
+            <li class="header__nav-item"><a class="header__nav-link" href="#staff">スタッフ</a></li>
+            <li class="header__nav-item"><a class="header__nav-link" href="#referrers">紹介元の方へ</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="header__contact">
+        <p class="header__tel">TEL <a class="header__tel-link" href="tel:0311112222">03-1111-2222</a><br>受付時間 9:00-18:00</p>
+        <a class="button button--secondary header__cta" href="#top">新規利用について相談する</a>
+      </div>
+      <button class="header__menu" type="button" aria-label="メニューを開く" aria-expanded="false">
+        <span class="header__menu-line"></span>
+        <span class="header__menu-line"></span>
+        <span class="header__menu-line"></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- 01 FV -->
+    <section class="fv">
+      <img class="fv__curve fv__curve--pink" src="images/fv-curve-pink.webp" alt="" width="1440" height="721">
+      <div class="fv__hero">
+        <img class="fv__blob" src="images/fv-blob.webp" alt="" width="262" height="227">
+        <div class="fv__copy">
+          <h1 class="fv__title">一人ひとりに、<br><span class="fv__accent">最適な専門性</span>を。</h1>
+          <p class="fv__lead">看護とリハビリ、<br>それぞれの専門性を<span class="fv__accent">ひとつのチーム</span>に。</p>
+          <p class="fv__body">日々の体調管理から、医療処置、自宅でのリハビリまで。<br class="u-br-pc">住み慣れた場所での暮らしを、看護とリハビリの専門職が支えます。</p>
+          <div class="fv__cta">
+            <a class="button button--primary" href="#top">新規利用について相談する</a>
+            <a class="button button--secondary" href="#top">現在の空き状況を確認する</a>
+          </div>
+        </div>
+        <div class="fv__visual">
+          <picture>
+            <source media="(max-width: 1439px)" srcset="images/fv-sp.webp">
+            <img class="fv__photo" src="images/fv.webp" alt="看護師とリハビリスタッフが笑顔で並んでいる様子" width="684" height="605">
+          </picture>
+          <img class="fv__ribbon" src="images/fv-curve-red-sp.webp" alt="" width="375" height="84">
+        </div>
+      </div>
+      <div class="fv__service">
+        <div class="fv__service-inner">
+          <h2 class="fv__service-title"><span class="fv__accent">MEDICAL SUPPORT</span><span class="fv__service-sep">　</span>幅広い医療ニーズに対応</h2>
+          <ul class="fv__tags">
+            <li class="fv__tag"><span class="fv__tag-num">01</span>人工呼吸器</li>
+            <li class="fv__tag"><span class="fv__tag-num">02</span>気管切開</li>
+            <li class="fv__tag"><span class="fv__tag-num">03</span>神経難病</li>
+            <li class="fv__tag"><span class="fv__tag-num">04</span>がん末期</li>
+            <li class="fv__tag"><span class="fv__tag-num">05</span>医療用麻薬</li>
+            <li class="fv__tag"><span class="fv__tag-num">06</span>在宅看取り</li>
+          </ul>
+        </div>
+      </div>
+      <img class="fv__curve fv__curve--red" src="images/fv-curve-red.webp" alt="" width="1440" height="361">
+    </section>
+
+    <!-- 02 Services -->
+    <section class="services" id="services">
+      <div class="services__inner">
+        <div class="section-heading">
+          <p class="section-heading__eyebrow">SERVICES</p>
+          <h2 class="section-heading__title">必要な支援を、必要なかたちで。</h2>
+          <p class="section-heading__lead">看護とリハビリを切り分けせず、一つのチームとして連携して支えます。</p>
+        </div>
+        <div class="services__cards">
+          <article class="service-card service-card--nursing">
+            <h3 class="service-card__label">看護 Nursing</h3>
+            <img class="service-card__img" src="images/services-nursing.webp" alt="点滴スタンドのそばで対応する看護師のイラスト" width="320" height="320">
+            <ul class="service-card__list">
+              <li class="service-card__item">体調確認・異常の早期発見</li>
+              <li class="service-card__item">服薬管理と指導</li>
+              <li class="service-card__item">褥瘡処置・点滴などの医療処置</li>
+              <li class="service-card__item">排便コントロール</li>
+              <li class="service-card__item">終末期のターミナルケア</li>
+            </ul>
+          </article>
+          <div class="services__cross" aria-hidden="true"></div>
+          <article class="service-card service-card--rehabilitation">
+            <h3 class="service-card__label">リハビリ Rehabilitation</h3>
+            <img class="service-card__img" src="images/services-rehabilitation.webp" alt="理学療法士が利用者に寄り添ってリハビリを行うイラスト" width="320" height="320">
+            <ul class="service-card__list">
+              <li class="service-card__item">脳血管疾患の後遺症</li>
+              <li class="service-card__item">パーキンソン病などの神経難病</li>
+              <li class="service-card__item">転倒予防・骨折によるADL低下</li>
+              <li class="service-card__item">要支援へのADL低下予防</li>
+              <li class="service-card__item">廃用症候群</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 Cases -->
+    <section class="cases" id="cases">
+      <div class="cases__inner">
+        <div class="section-heading section-heading--multiline">
+          <p class="section-heading__eyebrow">CASES</p>
+          <h2 class="section-heading__title">受け入れ先が見つからない。<br>そんなときこそ、ご相談ください。</h2>
+          <p class="section-heading__lead">「このケース、お願いできるかな？」という段階で構いません。<br>医療依存度の高いケースから、退院後のリハビリまで、まずは一度ご相談ください。</p>
+        </div>
+        <div class="cases__list">
+          <article class="case case--short-desc">
+            <div class="case__head">
+              <span class="case__number">01</span>
+              <h3 class="case__type">退院支援</h3>
+            </div>
+            <div class="case__body">
+              <p class="case__quote"><span class="case__mark">“</span>医療処置が多く、退院後の訪問看護が見つからない。<span class="case__mark">”</span></p>
+              <p class="case__desc">人工呼吸器・気管切開・終末期など、専門的な医療管理が必要なケースにも対応します。</p>
+              <p class="case__target"><span class="case__target-label">対象</span><span class="case__target-value">病院の退院支援看護師・相談員・地域連携室</span></p>
+            </div>
+          </article>
+          <article class="case">
+            <div class="case__head">
+              <span class="case__number">02</span>
+              <h3 class="case__type">訪問看護の変更</h3>
+            </div>
+            <div class="case__body">
+              <p class="case__quote"><span class="case__mark">“</span>対応できるだけではなく、安心して任せられる訪問看護を探している。<span class="case__mark">”</span></p>
+              <p class="case__desc">医療依存度の高い方には、疾患や医療処置の経験を持つスタッフを主担当として配置し、チーム全体で情報を共有します。</p>
+              <p class="case__target"><span class="case__target-label">対象</span><span class="case__target-value">重症利用者を担当する居宅ケアマネジャー</span></p>
+            </div>
+          </article>
+          <article class="case">
+            <div class="case__head">
+              <span class="case__number">03</span>
+              <h3 class="case__type">退院後のリハビリ</h3>
+            </div>
+            <div class="case__body">
+              <p class="case__quote"><span class="case__mark">“</span>退院後の生活に不安があり、まずはリハビリから相談したい。<span class="case__mark">”</span></p>
+              <p class="case__desc">脳血管疾患・パーキンソン病・整形疾患・廃用など、幅広い在宅リハビリに対応。必要に応じて看護師とも連携します。</p>
+              <p class="case__target"><span class="case__target-label">対象</span><span class="case__target-value">訪問リハビリを探している居宅ケアマネジャー</span></p>
+            </div>
+          </article>
+        </div>
+        <div class="cases__cta">
+          <a class="button button--primary" href="#top">新規利用について相談する</a>
+        </div>
+      </div>
+      <picture>
+        <source media="(max-width: 1439px)" srcset="images/cases-wave-sp.svg">
+        <img class="cases__wave" src="images/cases-wave.svg" alt="" width="1440" height="182">
+      </picture>
+    </section>
+
+    <!-- 04 Trial Rehabilitation -->
+    <section class="trial" id="trial">
+      <div class="trial__inner">
+        <div class="section-heading section-heading--light">
+          <p class="section-heading__eyebrow">TRIAL REHABILITATION</p>
+        </div>
+        <div class="trial__content">
+          <div class="trial__copy">
+            <h2 class="trial__title">「訪問リハ、合うかな？」を<br class="u-br-pc">まずは30分から。</h2>
+            <div class="trial__body">
+              <p>訪問リハビリを利用するか迷っている方へ。30分のお試しリハビリを実施しています。</p>
+              <p>実際の生活環境や身体状況を確認しながら、理学療法士が現在のお困りごとや今後のリハビリについてご提案します。</p>
+            </div>
+            <div class="trial__cta">
+              <a class="button button--trial" href="#top">お試しリハについて相談する</a>
+            </div>
+          </div>
+          <picture>
+            <source media="(max-width: 1439px)" srcset="images/riha-long.webp">
+            <img class="trial__photo" src="images/riha-wide.webp" alt="理学療法士が高齢の女性に笑顔で話しかけている様子" width="592" height="480">
+          </picture>
+          <ul class="trial__chips">
+            <li class="trial__chip trial__chip--1"><span class="trial__chip-mark">“</span>訪問リハが必要かまだ分からない<span class="trial__chip-mark">”</span></li>
+            <li class="trial__chip trial__chip--2"><span class="trial__chip-mark">“</span>本人がリハビリに乗り気ではない<span class="trial__chip-mark">”</span></li>
+            <li class="trial__chip trial__chip--3"><span class="trial__chip-mark">“</span>まずは自宅での様子を見てほしい<span class="trial__chip-mark">”</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 Strengths -->
+    <section class="strengths" id="strengths">
+      <div class="strengths__inner">
+        <div class="section-heading section-heading--no-lead">
+          <p class="section-heading__eyebrow">STRENGTH</p>
+          <h2 class="section-heading__title">TASUKIの3つの強み</h2>
+        </div>
+        <div class="strengths__list">
+          <article class="strength strength--01">
+            <div class="strength__text">
+              <span class="strength__number" aria-hidden="true">01</span>
+              <h3 class="strength__headline">医療依存度の高い方にも対応。<br>「安心して任せられる」訪問看護へ。</h3>
+              <p class="strength__body">救急・重症管理、緩和ケア、神経・呼吸器、循環器、リハビリ。<br class="u-br-pc">異なる臨床経験を持つスタッフが、疾患や状態に合わせて専門性を発揮。<br class="u-br-pc">その分野を得意とするスタッフを主担当として配置する。</p>
+            </div>
+            <div class="strength__visual">
+              <img class="strength__img" src="images/strengths-01.webp" alt="笑顔で手を上げる看護師のイラスト" width="383" height="383">
+              <ul class="strength__tags">
+                <li class="strength__tag strength__tag--1">人工呼吸器</li>
+                <li class="strength__tag strength__tag--2">ストマ管理</li>
+                <li class="strength__tag strength__tag--3">麻薬管理</li>
+                <li class="strength__tag strength__tag--4">褥瘡処置</li>
+              </ul>
+            </div>
+          </article>
+          <article class="strength strength--02">
+            <img class="strength__img" src="images/strengths-02.webp" alt="看護師が車いすの利用者を支えているイラスト" width="474" height="474">
+            <div class="strength__text">
+              <span class="strength__number" aria-hidden="true">02</span>
+              <h3 class="strength__headline">看護×リハビリで、<br>暮らしをまるごと支える。</h3>
+              <p class="strength__body">看護師とPTが病状管理、身体機能、ADL、<br class="u-br-pc">生活環境を共有し、必要な支援の変化に柔軟に対応する。</p>
+            </div>
+          </article>
+          <article class="strength strength--03">
+            <span class="strength__number" aria-hidden="true">03</span>
+            <div class="strength__text">
+              <p class="strength__label">ーTASUKI独自の強みー</p>
+              <h3 class="strength__headline">専門性をチーム全体の力へ。<br>この人しかわからないをなくす。</h3>
+              <p class="strength__body">訪問後には状態変化や急変・入院リスクを共有し、注意が必要なケースでは「今夜何が起こり得るか」「変化があった場合にどう対応するか」まで検討してオンコール担当へ引き継ぐ。</p>
+              <p class="strength__lead">『一人の経験を、一人だけのものにしない。』</p>
+              <p class="strength__note">がん・緩和ケア、神経難病・呼吸器、循環器、重症管理の知識・判断をケース共有によってチームへ還元し、ステーション全体の看護力を高める。</p>
+            </div>
+            <picture>
+              <source media="(max-width: 1439px)" srcset="images/strengths-cycle-sp.svg">
+              <img class="strength__cycle" src="images/strengths-cycle.svg" alt="主担当から始まり、訪問、ケース共有、リスク検討、オンコール引継ぎの5つのステップを順に回り、中心で情報と判断をチームで共有することを表した循環図" width="473" height="380">
+            </picture>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 Medical Coverage -->
+    <section class="coverage" id="coverage">
+      <picture>
+        <source media="(max-width: 1439px)" srcset="images/coverage-wave-top-sp.svg">
+        <img class="coverage__wave coverage__wave--top" src="images/coverage-wave-top.svg" alt="" width="1440" height="151">
+      </picture>
+      <div class="coverage__inner">
+        <div class="section-heading section-heading--short">
+          <p class="section-heading__eyebrow">COVERAGE</p>
+          <h2 class="section-heading__title">医療処置が必要な方も、<br>まずはご相談ください。</h2>
+        </div>
+        <div class="coverage__columns">
+          <div class="coverage__card coverage__card--procedures">
+            <h3 class="coverage__tag">対応できる医療処置</h3>
+            <ul class="coverage__list">
+              <li class="coverage__item">人工呼吸器／NPPV／気管切開</li>
+              <li class="coverage__item">吸引／在宅酸素／点滴</li>
+              <li class="coverage__item">CVポート／PICC</li>
+              <li class="coverage__item">胃ろう・経管栄養／ストーマ</li>
+              <li class="coverage__item">褥瘡／医療用麻薬</li>
+              <li class="coverage__item">各種カテーテル　など</li>
+            </ul>
+          </div>
+          <div class="coverage__card coverage__card--diseases">
+            <h3 class="coverage__tag">対応できる疾患・状態</h3>
+            <ul class="coverage__list">
+              <li class="coverage__item">がん・終末期</li>
+              <li class="coverage__item">ALS・パーキンソン病などの神経難病</li>
+              <li class="coverage__item">心不全・循環器疾患</li>
+              <li class="coverage__item">COPDなどの呼吸器疾患</li>
+              <li class="coverage__item">脳血管疾患／糖尿病</li>
+              <li class="coverage__item">認知症／廃用症候群　など</li>
+            </ul>
+          </div>
+        </div>
+        <p class="coverage__note">上記以外の疾患・医療処置についてもお気軽にお問い合わせください。</p>
+        <div class="coverage__cta">
+          <p class="coverage__tel"><span class="coverage__tel-number">TEL <a class="coverage__tel-link" href="tel:0311112222">03-1111-2222</a></span><br class="u-br-pc">受付時間 9:00-18:00</p>
+          <a class="button button--primary" href="#top">新規利用について相談する</a>
+        </div>
+      </div>
+      <picture>
+        <source media="(max-width: 1439px)" srcset="images/coverage-wave-bottom-sp.svg">
+        <img class="coverage__wave coverage__wave--bottom" src="images/coverage-wave-bottom.svg" alt="" width="1440" height="149">
+      </picture>
+    </section>
+
+    <!-- 07 Staff -->
+    <section class="staff" id="staff">
+      <div class="staff__inner">
+        <div class="section-heading section-heading--tall">
+          <p class="section-heading__eyebrow">STAFF</p>
+          <h2 class="section-heading__title">一人ひとりに、最適な専門性を。</h2>
+          <p class="section-heading__lead">救急・重症管理、緩和ケア、神経・呼吸器、循環器、リハビリ。異なる臨床経験を持つスタッフが、それぞれの強みを活かしながら、一つのチームとして利用者さまを支えています。</p>
+        </div>
+        <article class="staff-feature">
+          <picture>
+            <source media="(max-width: 1439px)" srcset="images/staff1-sp.webp">
+            <img class="staff-feature__photo" src="images/staff1.webp" alt="管理者・看護師の男性スタッフ" width="420" height="340">
+          </picture>
+          <div class="staff-feature__text">
+            <p class="staff-feature__role">管理者／看護師　救命・ICU／重症管理／人工呼吸器／気管切開</p>
+            <p class="staff-feature__quote">「家で過ごしたい」を、安心して選べる地域へ。</p>
+            <p class="staff-feature__bio">大学病院の救命・ICU領域で重症患者の看護を経験した後、大手訪問看護ステーションへ。在宅医療で受け入れ先が見つからない方や専門知識を必要とするケースに出会い、「受け入れるなら、最後まで責任を持てる看護を」という思いから開設。</p>
+          </div>
+        </article>
+        <hr class="staff__divider">
+        <ul class="staff-strip">
+          <li class="staff-member staff-member--1">
+            <picture>
+              <source media="(max-width: 1439px)" srcset="images/staff2-sp.webp">
+              <img class="staff-member__photo" src="images/staff2.webp" alt="看護師の女性スタッフ（緩和ケア）" width="257" height="168">
+            </picture>
+            <div class="staff-member__body">
+              <p class="staff-member__role">看護師　がん／緩和ケア／医療用麻薬／在宅看取り</p>
+              <p class="staff-member__quote">「最期まで、その人らしく過ごせる時間を。」</p>
+              <p class="staff-member__bio">緩和ケア領域と訪問看護の経験を持ち、疼痛管理、終末期ケア、家族支援を得意とする。管理者の前職からの仲間で、理念に共感し開設メンバーとして参加。</p>
+            </div>
+          </li>
+          <li class="staff-member staff-member--2">
+            <picture>
+              <source media="(max-width: 1439px)" srcset="images/staff4-sp.webp">
+              <img class="staff-member__photo" src="images/staff4.webp" alt="看護師の女性スタッフ（神経難病・呼吸器）" width="257" height="168">
+            </picture>
+            <div class="staff-member__body">
+              <p class="staff-member__role">看護師　神経難病／呼吸器／人工呼吸器／気管切開</p>
+              <p class="staff-member__quote">「病気ではなく、その方の生活を見る。」</p>
+              <p class="staff-member__bio">神経内科・呼吸器内科病棟で4年間勤務後、訪問看護へ。パーキンソン病、ALS、呼吸器疾患、人工呼吸器、NPPV、気管切開等を経験。訪問看護1年目として同行・症例共有を重ねる。</p>
+            </div>
+          </li>
+          <li class="staff-member staff-member--3">
+            <picture>
+              <source media="(max-width: 1439px)" srcset="images/staff3-sp.webp">
+              <img class="staff-member__photo" src="images/staff3.webp" alt="看護師の女性スタッフ（循環器）" width="257" height="168">
+            </picture>
+            <div class="staff-member__body">
+              <p class="staff-member__role">看護師　循環器／心不全／心臓血管外科／再入院予防</p>
+              <p class="staff-member__quote">「退院したその先まで、看護をつなげたい。」</p>
+              <p class="staff-member__bio">循環器・心臓血管外科を中心に急性期医療を経験。管理者とは病院時代の先輩・後輩。入退院を繰り返す患者を通じ、退院後の生活を支える看護に関心を持った。</p>
+            </div>
+          </li>
+          <li class="staff-member staff-member--4">
+            <picture>
+              <source media="(max-width: 1439px)" srcset="images/staff5-sp.webp">
+              <img class="staff-member__photo" src="images/staff5.webp" alt="理学療法士の男性スタッフ" width="257" height="168">
+            </picture>
+            <div class="staff-member__body">
+              <p class="staff-member__role">理学療法士　脳血管／パーキンソン病／整形／廃用／生活期リハ</p>
+              <p class="staff-member__quote">「できることを、暮らしの中で増やしていく。」</p>
+              <p class="staff-member__bio">脳梗塞後、パーキンソン病、整形疾患、廃用症候群等に対応。看護師と日々共有し、医療管理が必要な方にも状態に合わせたリハビリを提供。</p>
+            </div>
+          </li>
+        </ul>
+        <hr class="staff__divider">
+        <div class="staff-office">
+          <picture>
+            <source media="(max-width: 1439px)" srcset="images/staff6-sp.webp">
+            <img class="staff-office__photo" src="images/staff6.webp" alt="パソコンに向かって事務作業をする女性スタッフ" width="96" height="96">
+          </picture>
+          <div class="staff-office__text">
+            <p class="staff-office__title"><span class="staff-office__role">医療事務・地域連携</span><span class="staff-office__sep">　</span><span class="staff-office__quote">「相談しやすいステーションの、最初の窓口に。」</span></p>
+            <p class="staff-office__body">医療・介護保険請求、レセプト、指示書等を担当。新規依頼と関係機関からの連絡にも対応し、看護師がケア・情報共有に集中できる環境を支える。</p>
+          </div>
+        </div>
+      </div>
+      <picture>
+        <source media="(max-width: 1439px)" srcset="images/staff-wave-sp.svg">
+        <img class="staff__wave" src="images/staff-wave.svg" alt="" width="1440" height="197">
+      </picture>
+    </section>
+
+    <!-- 08 On-call -->
+    <section class="oncall" id="oncall">
+      <div class="oncall__inner">
+        <div class="section-heading section-heading--white section-heading--compact">
+          <p class="section-heading__eyebrow">ON-CALL</p>
+          <h2 class="section-heading__title">夜間の安心は、日中から準備する。</h2>
+        </div>
+        <p class="oncall__body">在宅療養では夜間・休日にも状態が変化する。<br class="u-br-pc">日中訪問で変化があった方、急変・入院リスクが高い方について帰社後に申し送りする。</p>
+        <p class="oncall__note">「今夜何が起こり得るか」「その場合どう対応するか」までチームで共有し、オンコール担当へ引き継ぐ。</p>
+        <div class="oncall__band">
+          <span class="oncall__band-label oncall__band-label--start">DAYTIME</span>
+          <span class="oncall__band-label oncall__band-label--end">NIGHT</span>
+          <ol class="oncall__steps">
+            <li class="oncall__step">
+              <span class="oncall__chip oncall__chip--1"><img class="oncall__icon" src="images/oncall-icon-daytime.svg" alt="" width="29" height="29"></span>
+              <span class="oncall__step-label">日中訪問</span>
+            </li>
+            <li class="oncall__step">
+              <span class="oncall__chip oncall__chip--2"><img class="oncall__icon" src="images/oncall-icon-check.svg" alt="" width="32" height="32"></span>
+              <span class="oncall__step-label">状態変化把握</span>
+            </li>
+            <li class="oncall__step">
+              <span class="oncall__chip oncall__chip--3"><img class="oncall__icon" src="images/oncall-icon-team.svg" alt="" width="34" height="34"></span>
+              <span class="oncall__step-label">チーム検討</span>
+            </li>
+            <li class="oncall__step">
+              <span class="oncall__chip oncall__chip--4"><img class="oncall__icon" src="images/oncall-icon-policy.svg" alt="" width="30" height="30"></span>
+              <span class="oncall__step-label">対応方針</span>
+            </li>
+            <li class="oncall__step oncall__step--last">
+              <span class="oncall__chip oncall__chip--5"><img class="oncall__icon" src="images/oncall-icon-phone.svg" alt="" width="31" height="31"></span>
+              <span class="oncall__step-label">オンコール引継ぎ</span>
+            </li>
+          </ol>
+          <img class="oncall__arrow oncall__arrow--1" src="images/oncall-arrow.svg" alt="" width="18" height="18">
+          <img class="oncall__arrow oncall__arrow--2" src="images/oncall-arrow.svg" alt="" width="18" height="18">
+          <img class="oncall__arrow oncall__arrow--3" src="images/oncall-arrow.svg" alt="" width="18" height="18">
+          <img class="oncall__arrow oncall__arrow--4" src="images/oncall-arrow.svg" alt="" width="18" height="18">
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 Partners -->
+    <section class="partners" id="referrers">
+      <div class="partners__inner">
+        <div class="partners__main">
+          <div class="section-heading section-heading--short partners__heading">
+            <p class="section-heading__eyebrow">PARTNERS</p>
+            <h2 class="section-heading__title">「このケース、お願いできるかな？」<br>その段階でご相談ください。</h2>
+          </div>
+          <div class="partners__info">
+            <p class="partners__body">受け入れ可否が分からない段階でも構いません。ご家族の状況などを伺い、対応方法を一緒に検討します。医療依存度の高いケースや退院まで時間がないケースも、まずはお問い合わせください。</p>
+            <div class="partners__target">
+              <p class="partners__target-label">対象</p>
+              <p class="partners__target-list">病院・地域連携室／居宅介護支援事業所／地域包括支援センター／医療機関</p>
+            </div>
+          </div>
+        </div>
+        <div class="partners__cta">
+          <p class="partners__cta-label">＜ご相談方法について＞</p>
+          <p class="partners__tel"><a class="partners__tel-link" href="tel:0311112222"><span class="partners__tel-affix">[電話番号：</span>03-1111-2222<span class="partners__tel-affix">]</span></a></p>
+          <p class="partners__hours">受付時間 9:00-18:00／対応エリア八王子周辺</p>
+          <a class="button button--primary button--large" href="#top">新規利用について相談する</a>
+          <a class="button button--secondary button--large" href="#top">現在の空き状況を確認する</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 Final CTA -->
+    <section class="final-cta">
+      <div class="final-cta__inner">
+        <div class="final-cta__main">
+          <h2 class="final-cta__title">住み慣れた場所で過ごしたい。<br>その思いを、医療の力で支えます。</h2>
+          <p class="final-cta__body">医療依存度の高さだけで、在宅療養をあきらめる必要はありません。<br class="u-br-pc">「このケースは難しいかもしれない」と思ったときこそ、私たちにご相談ください。</p>
+          <div class="final-cta__buttons">
+            <a class="button button--primary final-cta__button-primary" href="#top">新規利用について相談する</a>
+            <a class="button button--secondary final-cta__button-secondary" href="#top">現在の空き状況を確認する</a>
+          </div>
+        </div>
+        <div class="final-cta__side">
+          <div class="final-cta__logo">
+            <span class="final-cta__logo-name">TASUKI</span>
+            <span class="final-cta__logo-caption">訪問看護ステーション</span>
+          </div>
+          <p class="final-cta__tel"><a class="final-cta__tel-link" href="tel:0311112222">[電話番号：03-1111-2222]</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

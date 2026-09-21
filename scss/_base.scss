@@ -1,0 +1,18 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+// PC でだけ有効な改行（SP では隠して、幅に合わせて折り返す）
+.u-br-pc {
+  @include sp {
+    display: none;
+  }
+}
+
+body {
+  color: $color-text-primary;
+  font-family: $font-family-base;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // Figma は「」や。』などの約物の間の空白を詰めない
+  text-spacing-trim: space-all;
+}

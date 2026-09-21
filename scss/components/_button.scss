@@ -1,0 +1,46 @@
+@use "../variables" as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
+  height: 56px;
+  padding: 16px 24px;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba($color-black, 0.25);
+  font-size: 16px;
+  font-weight: $font-weight-bold;
+  line-height: 19px;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &--primary {
+    width: 240px;
+    background-color: $color-primary;
+    color: $color-white;
+  }
+
+  &--secondary {
+    width: 242px;
+    border: 1px solid $color-primary;
+    background-color: $color-white;
+    color: $color-primary;
+  }
+
+  // 大きいサイズ（Figma: 09_Partners は幅318px・ラベル20px）。--primary / --secondary と併用する
+  &--large {
+    width: 318px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  // 04_Trial_Rehabilitation 用（Figma: CTA/Trial）
+  &--trial {
+    width: 258px;
+    border: 2px solid $color-primary;
+    background-color: $color-white;
+    color: $color-primary;
+  }
+}

@@ -1,0 +1,189 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.final-cta {
+  padding: 120px;
+  background: $gradient-primary;
+  color: $color-white;
+
+  @include sp {
+    padding: 48px 24px 66px;
+  }
+
+  // SP は縦に積み、ロゴと電話番号（side）を先頭に回す（order）
+  &__inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 92px;
+    max-width: $content-max-width;
+    height: 298px;
+    margin: 0 auto;
+
+    @include sp {
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      max-width: none;
+      height: auto;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: 28px;
+    width: 541px;
+
+    @include sp {
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      padding: 31px 0;
+    }
+  }
+
+  // Figma 上で、H2 の文字幅（628px）は左カラム（541px）より広い
+  &__title {
+    margin: 0;
+    font-size: 34px;
+    font-weight: $font-weight-bold;
+    line-height: 41px;
+    white-space: nowrap;
+
+    @include sp {
+      font-size: 20px;
+      line-height: 30px;
+    }
+  }
+
+  &__body {
+    margin: 0;
+    color: rgba($color-white, 0.85);
+    font-size: 16px;
+    font-weight: $font-weight-medium;
+    line-height: 28px;
+
+    @include sp {
+      align-self: stretch;
+      color: rgba($color-white, 0.92);
+      font-size: 12px;
+      line-height: 22px;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 16px;
+    height: 76px;
+
+    @include sp {
+      flex-direction: column;
+      align-self: stretch;
+      height: auto;
+    }
+  }
+
+  // 赤背景用に、ボタンの配色を反転（Figma: 白いボタンと、白枠のボタン）
+  &__button-primary {
+    background-color: $color-white;
+    color: $color-primary;
+
+    @include sp {
+      width: 100%;
+    }
+  }
+
+  &__button-secondary {
+    border-width: 2px;
+    border-color: $color-white;
+    background-color: transparent;
+    color: $color-white;
+
+    @include sp {
+      width: 100%;
+      border-width: 1px;
+    }
+  }
+
+  &__side {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    width: 567px;
+    height: 298px;
+
+    @include sp {
+      order: -1;
+      gap: 16px;
+      width: auto;
+      height: auto;
+    }
+  }
+
+  // Header のロゴを大きくした形（Figma: Tasuki Mark）
+  &__logo {
+    display: block;
+    width: 347px;
+    text-align: center;
+
+    // SP は Header のロゴと同じ大きさ（幅150px）
+    @include sp {
+      width: 150px;
+    }
+  }
+
+  &__logo-name {
+    display: block;
+    padding: 14px 0;
+    border-top: 3px solid $color-white;
+    border-bottom: 3px solid $color-white;
+    font-size: 64px;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.16em;
+    line-height: 77px;
+
+    @include sp {
+      padding: 6px 0;
+      font-size: 20px;
+      line-height: 24px;
+    }
+  }
+
+  &__logo-caption {
+    display: block;
+    margin-top: 14px;
+    // 末尾の文字間隔ぶんを左に足して、文字が中央に見えるようにする
+    padding-left: 0.16em;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.16em;
+    line-height: 29px;
+
+    @include sp {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+
+  &__tel {
+    margin: 0;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+    line-height: 29px;
+
+    @include sp {
+      font-size: 16px;
+      line-height: 19px;
+    }
+  }
+
+  &__tel-link {
+    color: inherit;
+    text-decoration: none;
+  }
+}

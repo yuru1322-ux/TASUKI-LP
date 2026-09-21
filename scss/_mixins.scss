@@ -1,0 +1,9 @@
+@use "variables" as *;
+
+// SP（1439px以下）。PC（1440px以上）の値をベースに書き、SP側をここで上書きする。
+// 375px〜1439pxの間の切り替え幅は、間の調整で決める。
+@mixin sp {
+  @media (max-width: #{$breakpoint-pc - 1px}) {
+    @content;
+  }
+}

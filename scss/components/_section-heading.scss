@@ -1,0 +1,276 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+.section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  @include sp {
+    gap: 22px;
+  }
+
+  &__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 58px;
+    margin: 0;
+    color: rgba($color-coral, 0.85);
+    font-size: 48px;
+    font-weight: $font-weight-bold;
+    line-height: 58px;
+
+    @include sp {
+      gap: 14px;
+      height: 29px;
+      font-size: 24px;
+      line-height: 29px;
+    }
+
+    &::after {
+      content: "";
+      flex: none;
+      width: 146px;
+      height: 4px;
+      background-color: $color-primary;
+      transform: translateY(-2px);
+
+      @include sp {
+        width: 64px;
+        height: 3px;
+        transform: none;
+      }
+    }
+  }
+
+  &__title {
+    margin: 0;
+    color: $color-text-primary;
+    font-size: 36px;
+    font-weight: $font-weight-bold;
+    line-height: 43px;
+
+    @include sp {
+      font-size: 26px;
+      line-height: 31px;
+    }
+  }
+
+  &__lead {
+    margin: 0;
+    color: $color-text-primary;
+    font-size: 20px;
+    font-weight: $font-weight-medium;
+    line-height: 24px;
+
+    @include sp {
+      font-size: 15px;
+      line-height: 18px;
+    }
+  }
+
+  // 赤背景セクション用（Figma: 白文字85%＋白い線、文字と線の間隔20px）
+  // SP は文字20px・白95%、線は56×3の白60%（間隔14px）
+  &--light &__eyebrow {
+    gap: 20px;
+    color: rgba($color-white, 0.85);
+
+    @include sp {
+      gap: 14px;
+      height: 24px;
+      color: rgba($color-white, 0.95);
+      font-size: 20px;
+      line-height: 24px;
+    }
+
+    &::after {
+      background-color: $color-white;
+      transform: none;
+
+      @include sp {
+        width: 56px;
+        height: 3px;
+        opacity: 0.6;
+      }
+    }
+  }
+
+  // リードなし（Figma: 空のリード24px分と、その前後の余白40pxが残る）
+  &--no-lead {
+    padding-bottom: 64px;
+
+    // SP は間隔26px、H2の行の高さ36px
+    @include sp {
+      gap: 26px;
+      padding-bottom: 26px;
+    }
+  }
+
+  &--no-lead &__title {
+    @include sp {
+      line-height: 36px;
+    }
+  }
+
+  // 赤背景セクション用（白文字。--light と違い、文字と線の間隔は標準の16px）
+  &--white &__eyebrow {
+    color: rgba($color-white, 0.85);
+
+    &::after {
+      background-color: $color-white;
+    }
+  }
+
+  &--white &__title {
+    color: $color-white;
+  }
+
+  // 高さ170pxのバリエーション（Figma: 高さ205pxのインスタンスを170pxに縮め、H2を26pxにしたもの）
+  &--compact {
+    gap: 0;
+    height: 170px;
+
+    @include sp {
+      gap: 20px;
+      height: auto;
+    }
+  }
+
+  &--compact > * {
+    flex-shrink: 0;
+  }
+
+  &--compact &__eyebrow {
+    height: 48.1px;
+
+    @include sp {
+      height: 26px;
+      font-size: 22px;
+      line-height: 26px;
+    }
+  }
+
+  &--compact &__title {
+    margin-top: 33.17px;
+    font-size: 26px;
+    line-height: 31px;
+
+    @include sp {
+      margin-top: 0;
+      font-size: 24px;
+      line-height: 36px;
+    }
+  }
+
+  // リードなし・高さ200pxのバリエーション（Figma: 高さ205pxのインスタンスを200pxに縮めたもの）
+  &--short {
+    gap: 0;
+    width: 1200px;
+    height: 200px;
+
+    @include sp {
+      gap: 22px;
+      width: auto;
+      height: auto;
+    }
+  }
+
+  &--short > * {
+    flex-shrink: 0;
+  }
+
+  &--short &__eyebrow {
+    height: 56.59px;
+
+    @include sp {
+      height: 29px;
+    }
+  }
+
+  &--short &__title {
+    margin-top: 39.03px;
+
+    @include sp {
+      margin-top: 0;
+      font-size: 24px;
+      line-height: 36px;
+    }
+  }
+
+  // 高さ229pxのバリエーション（Figma: 高さ205pxのインスタンスを229pxに伸ばしたもの）
+  // --multiline: H2が2行 / --tall: H2が1行でリードが2行
+  &--multiline,
+  &--tall {
+    gap: 0;
+    height: 229px;
+
+    @include sp {
+      gap: 22px;
+      height: auto;
+    }
+  }
+
+  &--multiline > *,
+  &--tall > * {
+    flex-shrink: 0;
+  }
+
+  &--multiline &__eyebrow,
+  &--tall &__eyebrow {
+    height: 64.79px;
+
+    @include sp {
+      height: 29px;
+    }
+  }
+
+  &--multiline &__title,
+  &--tall &__title {
+    margin-top: 44.68px;
+
+    @include sp {
+      margin-top: 0;
+    }
+  }
+
+  // SP の Cases の H2 は24px
+  &--multiline &__title {
+    @include sp {
+      font-size: 24px;
+      line-height: 29px;
+    }
+  }
+
+  &--multiline &__lead {
+    margin-top: 6.72px;
+
+    @include sp {
+      margin-top: 0;
+    }
+  }
+
+  &--tall &__lead {
+    margin-top: 49.72px;
+
+    @include sp {
+      margin-top: 0;
+      font-size: 14px;
+      line-height: 25px;
+    }
+  }
+
+  // SP の Staff は間隔24px、H2は24px（行の高さ36px）
+  &--tall {
+    @include sp {
+      gap: 24px;
+    }
+  }
+
+  &--tall &__title {
+    @include sp {
+      font-size: 24px;
+      line-height: 36px;
+    }
+  }
+}
