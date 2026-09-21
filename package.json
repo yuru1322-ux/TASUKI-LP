@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "sass:build": "sass scss/style.scss:css/style.css --style=compressed --no-source-map",
+    "sass:watch": "sass scss/style.scss:css/style.css --watch"
+  },
   "devDependencies": {
     "sass": "^1.104.1"
   }
