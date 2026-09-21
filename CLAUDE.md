@@ -14,20 +14,11 @@ wireframe-spec.md / design-guide.md を正とする（本リポジトリとは�
 - HTML
 - SCSS
 - JavaScript（Vanilla。フレームワーク不使用）
-- Dart Sass（`sass` npm package）
+- Sass（VS Code拡張「Live Sass Compiler」でコンパイルする）
 
-現状 `package.json` に `sass` のみがdevDependencyとして入っており、
-ビルド用のnpm scriptsは未定義。以下を基本コマンドとする（未整備の場合は
-実装開始前にpackage.jsonへ追加すること）。
-
-```json
-{
-  "scripts": {
-    "sass:build": "sass scss/style.scss:css/style.css --style=compressed --no-source-map",
-    "sass:watch": "sass scss/style.scss:css/style.css --watch"
-  }
-}
-```
+`scss/style.scss` を保存すると、`css/style.css` が自動で生成される
+（設定は `.vscode/settings.json`。出力は compressed・ソースマップなし）。
+npm / package.json は使わない。ビルド用のコマンドもない。
 
 バンドラー（webpack/vite等）は使わない。JSはモジュール分割が必要になった場合のみ
 `<script type="module">` + 素のESMで対応し、ビルドツールを追加しない。

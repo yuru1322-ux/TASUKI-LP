@@ -103,6 +103,32 @@ scss/
 
 各セクション・パーツのスタイルは、それぞれ対応するSCSSファイルに記述する。
 
+### Sassのコンパイル（Live Sass Compiler）
+
+SCSSのコンパイルには、VS Code拡張「Live Sass Compiler」（glenn2223.live-sass）を使用する。
+
+* SCSSを保存すると、`css/style.css` が自動で生成される。
+* 設定は `.vscode/settings.json` で管理し、AIが勝手に変更しない。
+
+```json
+{
+  "liveSassCompile.settings.formats": [
+    {
+      "format": "compressed",
+      "extensionName": ".css",
+      "savePath": "/css"
+    }
+  ],
+  "liveSassCompile.settings.generateMap": false
+}
+```
+
+* 出力は compressed・ソースマップなし。出力先は `css/` 直下（`scss/` の中には出力しない）。
+* コンパイル対象は、アンダースコアなしのエントリファイル（`scss/style.scss`）のみ。`_` から始まるファイルはパーシャルとして扱われ、単体では出力されない。
+* `css/style.css` は生成物のため、手動で編集しない。
+* npm / `package.json` / `package-lock.json` / `node_modules` は使わない。ビルド用コマンド（`sass:build` 等）もない。
+* AIはコンパイルを実行できないため、SCSSを変更したあとは、ユーザーにVS Codeで保存（コンパイル）して確認してもらう。
+
 ## 4. 既存コードについて
 
 - 既存コードの書き方・構成・設計を優先する。
