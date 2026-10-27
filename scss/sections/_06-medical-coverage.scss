@@ -2,10 +2,26 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
+// カード2枚（404px・410px）は大きさを変えず、間（1440pxで130px）を48pxまで詰める。
+// それでも入りきらない幅では縦に並べる。切り替え幅は中身の寸法から決まる値
+// （カードの列は見出しと同じ幅 = 100vw - 240px）
+$coverage-cards-width: 404px + 410px;
+$coverage-gap-min: 48px;
+$coverage-stack-max: $coverage-cards-width + $coverage-gap-min + $content-padding-pc * 2 - 1px;
+
+@mixin coverage-stack {
+  @media (min-width: $breakpoint-switch) and (max-width: $coverage-stack-max) {
+    @content;
+  }
+}
+
 .coverage {
   position: relative;
   min-height: 1237px;
-  padding-top: 128px;
+  // 下の波の高さ分の余白を確保し、カードが縦並びになって中身が伸びても波に埋もれない
+  // （1439px以下は SP の波 375:53 が幅いっぱいに拡大される。1440px では min-height で決まり、
+  // Figma どおりの位置のまま）
+  padding: 128px 0 wave-space();
   overflow: hidden;
   background-color: $color-white;
 
@@ -70,17 +86,26 @@
     }
   }
 
+  // カードの列は見出しと同じ幅（Inner の左右34px内側、上限1200px）に収める
   &__columns {
     display: flex;
     justify-content: center;
-    gap: 130px;
-    width: 100%;
+    gap: clamp(#{$coverage-gap-min}, 100% - #{$coverage-cards-width}, 130px);
+    width: min(#{$content-max-width}, 100% - 34px * 2);
     height: 367px;
+
+    @include coverage-stack {
+      flex-direction: column;
+      align-items: center;
+      gap: $coverage-gap-min;
+      height: auto;
+    }
 
     @include sp {
       flex-direction: column;
       align-items: center;
       gap: 22px;
+      width: auto;
       height: auto;
     }
   }

@@ -30,6 +30,16 @@
       max-width: $content-max-width-sp + $content-padding-sp * 2;
       padding: 40px 20px 48px;
     }
+
+    // 見出しは Figma の高さ（229px）を最小値にし、リードが折り返しても下に重ならない
+    .section-heading {
+      height: auto;
+      min-height: 229px;
+
+      @include sp {
+        min-height: 0;
+      }
+    }
   }
 
   // SP のカードの間に区切り線はない
