@@ -4,14 +4,18 @@
 .cases {
   position: relative;
   min-height: 975px;
-  padding: 96px 120px 0;
+  // 下端の波（1440:182、幅いっぱいに拡大）の高さから11pxを引いた余白を確保する。
+  // 1440pxではFigmaどおり min-height で決まる位置と一致し、カードが2列に折り返して
+  // セクションが伸びた時も、CTAボタンと波の位置関係を保つ（ボタンが波に埋もれない）
+  padding: 96px 120px calc(100% * 182 / 1440 - 11px);
   overflow: hidden;
   background-color: $color-white;
 
-  // SP は下端の曲線（53px）の分だけ余白を残す
+  // SP は下端の曲線（実測53px）の上に52pxの余白を確保する。波は幅いっぱいに
+  // 拡大され実際の高さも画面幅に応じて大きくなるため、その分を計算に含める
   @include sp {
     min-height: 0;
-    padding: 40px 20px 105px;
+    padding: 40px 20px calc(52px + #{wave-space()});
   }
 
   &__inner {
@@ -23,20 +27,22 @@
 
     @include sp {
       gap: 22px;
+      max-width: $content-max-width-sp;
     }
   }
 
   &__list {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
+    // 折り返して1行に収まらないカードは中央に寄せる
+    justify-content: center;
     gap: 48px;
-    height: 307px;
 
     @include sp {
       flex-direction: column;
       align-items: stretch;
       gap: 22px;
-      height: auto;
     }
   }
 
@@ -46,41 +52,47 @@
     padding-bottom: 9px;
 
     @include sp {
-      padding-bottom: 0;
+      padding-bottom: 0px;
     }
 
+    // SPはカードと同じ450pxを上限に中央寄せ
     .button {
       @include sp {
         width: 100%;
+        max-width: 450px;
       }
     }
   }
 
   &__wave {
     position: absolute;
-    top: 793px;
+    // 793px = min-height(975px) - 波の高さ(182px) と同じ位置になるよう、
+    // セクション下端に揃える（カードが折り返して縦に伸びても追従する）
+    bottom: 0;
     left: 0;
     width: 100%;
     height: auto;
     pointer-events: none;
-
-    @include sp {
-      top: auto;
-      bottom: 0;
-    }
   }
 }
 
 .case {
   display: flex;
-  flex: none;
+  // 3列（368px）を基準に、2列に折り返した時は列の幅いっぱいまで広げる。
+  // 上限は2列に切り替わった時の幅（(1200px - 48px) / 2 = 576px）で、SPに切り替わるまで
+  // 1列になってもこの幅を保つ。下線・区切り線もカード幅に合わせて伸びる
+  flex: 1 1 368px;
   flex-direction: column;
   gap: 20px;
-  width: 368px;
+  max-width: ($content-max-width - 48px) * 0.5;
 
   @include sp {
+    flex: none;
     gap: 14px;
-    width: auto;
+    // カード幅は450pxを上限に中央寄せ、それ未満は画面幅いっぱいまで広がる
+    align-self: center;
+    width: 100%;
+    max-width: 450px;
     padding-bottom: 18px;
   }
 
@@ -163,7 +175,7 @@
     line-height: 18px;
 
     @include sp {
-      margin: 0;
+      margin: 0px 0 0;
       font-size: 13.5px;
       line-height: 16px;
     }
@@ -179,9 +191,9 @@
 
     @include sp {
       gap: 8px;
-      margin: 0;
-      padding-top: 0;
-      border-top: 0;
+      margin: 0px 0 0;
+      padding-top: 0px;
+      border-top-width: 0px;
     }
   }
 
@@ -222,7 +234,7 @@
     margin-top: 48px;
 
     @include sp {
-      margin-top: 0;
+      margin-top: 0px;
     }
   }
 }

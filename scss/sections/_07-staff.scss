@@ -4,14 +4,16 @@
 .staff {
   position: relative;
   min-height: 1495px;
-  padding-top: 96px;
+  // 左右の余白は他のセクションと同じ120px（1440pxでは内側1200pxと一致する）
+  padding: 96px $content-padding-pc 0;
   overflow: hidden;
   background-color: $color-white;
 
-  // SP は下端の波（53px）の分だけ余白を残す
+  // SP は下端の波の分だけ余白を残す（波は幅いっぱいに拡大され実際の高さも
+  // 画面幅に応じて大きくなるため、その高さ分だけ余白を確保する）
   @include sp {
     min-height: 0;
-    padding: 0 0 53px;
+    padding: 0 0 wave-space();
   }
 
   &__inner {
@@ -24,8 +26,19 @@
 
     @include sp {
       gap: 24px;
-      max-width: none;
+      // border-box のため、左右の余白を含めた幅にする（中身は700pxで止まる）
+      max-width: $content-max-width-sp + $content-padding-sp * 2;
       padding: 40px 20px 48px;
+    }
+
+    // 見出しは Figma の高さ（229px）を最小値にし、リードが折り返しても下に重ならない
+    .section-heading {
+      height: auto;
+      min-height: 229px;
+
+      @include sp {
+        min-height: 0;
+      }
     }
   }
 
@@ -83,12 +96,13 @@
     }
   }
 
+  // 写真（420px）と間（56px）を除いた残りの幅（1440pxでFigmaの724px）。狭い時は折り返す
   &__text {
     display: flex;
-    flex: none;
+    flex: 1 1 0;
     flex-direction: column;
     gap: 14px;
-    width: 724px;
+    min-width: 0;
 
     @include sp {
       gap: 10px;
@@ -120,7 +134,6 @@
   }
 
   &__bio {
-    width: 620px;
     margin: 0;
     color: $color-text-secondary;
     font-size: 14px;
@@ -128,7 +141,6 @@
     line-height: 17px;
 
     @include sp {
-      width: auto;
       font-size: 12.5px;
       line-height: 21px;
     }
@@ -136,18 +148,23 @@
 }
 
 // スタッフ4名（縦区切り線は、2人目以降の左側に擬似要素で描く）
+// PC で4名が入りきらない幅では、この列だけ横スクロールにする（カードの幅は変えない）。
+// スクロールバーが場所を取る環境でも文字が切れないよう、高さは最小値で指定する
 .staff-strip {
   display: flex;
   gap: 57px;
-  height: 380px;
+  min-height: 380px;
   margin: 0;
   padding: 0;
   list-style: none;
+  overflow-x: auto;
+  overflow-y: hidden;
 
   @include sp {
     flex-direction: column;
     gap: 24px;
-    height: auto;
+    min-height: 0;
+    overflow: visible;
   }
 }
 
@@ -274,12 +291,13 @@
   align-items: center;
   justify-content: center;
   gap: 28px;
-  height: 96px;
+  // 文章が折り返して行が増えても、はみ出さずに伸びる
+  min-height: 96px;
 
   // SP は他のスタッフと同じカード（写真は円形）
   @include sp {
     display: block;
-    height: auto;
+    min-height: 0;
     border: 1px solid $color-divider;
     border-radius: 10px;
     background-color: $color-white;
@@ -303,12 +321,13 @@
     }
   }
 
+  // 1440pxではFigmaの871px。幅が足りない時は縮んで折り返す（左右の余白にかからない）
   &__text {
     display: flex;
-    flex: none;
+    flex: 0 1 871px;
     flex-direction: column;
     gap: 4px;
-    width: 871px;
+    min-width: 0;
 
     @include sp {
       gap: 10px;

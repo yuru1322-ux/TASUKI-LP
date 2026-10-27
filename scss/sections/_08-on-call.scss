@@ -4,6 +4,7 @@
 .oncall {
   min-height: 607px;
   padding: 50px 120px;
+  overflow: hidden;
   background: $gradient-primary;
   color: $color-white;
 
@@ -23,7 +24,8 @@
     @include sp {
       gap: 20px;
       height: auto;
-      max-width: none;
+      // border-box のため、左右の余白を含めた幅にする（中身は700pxで止まる）
+      max-width: $content-max-width-sp + $content-padding-sp * 2;
       padding: 40px 20px 48px;
     }
   }
@@ -42,6 +44,8 @@
 
     @include sp {
       width: auto;
+      // PCの800pxを上限に、それ未満は画面幅いっぱいまで広がる
+      max-width: 800px;
       font-size: 14px;
       line-height: 25px;
     }
@@ -123,8 +127,10 @@
       left: 20px;
     }
 
+    // 帯の右端基準で置き、幅が狭くなっても右端との位置関係を保つ
+    // （1440pxのFigmaでは左1145px。文字幅34.06pxの実測から右端まで約21px）
     &--end {
-      left: 1145px;
+      right: 21px;
 
       // DOM 上は DAYTIME の直後にあるので、SP では一番下に回す
       @include sp {
@@ -141,10 +147,12 @@
     padding: 0;
     list-style: none;
 
+    // SP は450pxを上限に中央寄せ（帯は align-items: center）
     @include sp {
       flex-direction: column;
       gap: 16px;
       width: 100%;
+      max-width: 450px;
     }
   }
 
@@ -290,29 +298,29 @@
   }
 
   // ステップ間の矢印（扇形）
+  // 矢印は隣り合うステップの間に置く。ステップの列（上限1080px・中央寄せ）は帯の幅に
+  // 合わせて縮むため、列の幅から位置を計算する（1440pxではFigmaの 235/470/705/940px）。
+  // ステップの中心の間隔 = (列の幅 - ステップの幅140px) / 4。
+  // 矢印（18px）の左端は、ステップ間の中点から12.5px左（Figmaの位置関係のまま）
   &__arrow {
+    --oncall-steps-width: min(1080px, 100%);
+
     position: absolute;
     top: 71px;
+    left: calc(
+      (100% - var(--oncall-steps-width)) / 2 + 70px - 12.5px +
+        (var(--oncall-arrow-index) + 0.5) * (var(--oncall-steps-width) - 140px) / 4
+    );
     display: block;
 
     @include sp {
       display: none;
     }
 
-    &--1 {
-      left: 235px;
-    }
-
-    &--2 {
-      left: 470px;
-    }
-
-    &--3 {
-      left: 705px;
-    }
-
-    &--4 {
-      left: 940px;
+    @for $i from 1 through 4 {
+      &--#{$i} {
+        --oncall-arrow-index: #{$i - 1};
+      }
     }
   }
 }

@@ -1,6 +1,17 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
+// ナビ＋電話番号＋ボタンが1行に収まらなくなる幅（実測）。この幅未満では、
+// ロゴとボタン以外の文字を少し小さくして、2行になってもコンパクトに収まる
+// ようにする（1297pxが実測の折り返し開始幅）。
+$header-compact-breakpoint: 1297px;
+
+@mixin header-compact {
+  @media (max-width: #{$header-compact-breakpoint - 1px}) {
+    @content;
+  }
+}
+
 .header {
   position: relative;
   z-index: 1;
@@ -15,9 +26,11 @@
 
   &__inner {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 74px;
+    row-gap: 8px;
+    padding: 12px 54px;
 
     @include sp {
       height: 48px;
@@ -27,8 +40,13 @@
 
   &__main {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 32px;
+
+    @include header-compact {
+      gap: 8px;
+    }
   }
 
   &__logo {
@@ -107,10 +125,15 @@
 
   &__nav-list {
     display: flex;
+    flex-wrap: wrap;
     gap: 18px;
     margin: 0;
     padding: 0;
     list-style: none;
+
+    @include header-compact {
+      gap: 6px;
+    }
   }
 
   &__nav-link {
@@ -123,18 +146,24 @@
 
   &__contact {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+
+    @include header-compact {
+      gap: 4px;
+    }
 
     @include sp {
       display: none;
     }
   }
 
+  // 電話番号は幅にかかわらず小さいサイズで固定する
   &__tel {
-    width: 194px;
+    width: 150px;
     margin: 0;
-    font-size: 18px;
-    line-height: 22px;
+    font-size: 14px;
+    line-height: 18px;
   }
 
   &__tel-link {

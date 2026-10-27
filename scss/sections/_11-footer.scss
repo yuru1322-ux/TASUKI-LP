@@ -1,0 +1,65 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// Figma にはないフッター。配色は Final CTA のグラデーション終端の色に続け、
+// 文字サイズ・余白はページ内の既存の値に揃える
+// （PC 14px = Header の電話番号、SP 12px = Final CTA SP の本文、左右の余白は各セクションと同じ）
+.footer {
+  padding: 24px $content-padding-pc;
+  background-color: $color-primary-dark;
+  color: $color-white;
+  font-size: 14px;
+  line-height: 17px;
+
+  @include sp {
+    padding: 24px $content-padding-sp;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  // PC はリンクを左、コピーライトを右に。SP は中央に縦積み
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    max-width: $content-max-width;
+    margin: 0 auto;
+
+    @include sp {
+      flex-direction: column;
+      gap: 16px;
+      max-width: $content-max-width-sp;
+    }
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @include sp {
+      justify-content: center;
+    }
+  }
+
+  &__link {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__copyright {
+    margin: 0;
+
+    small {
+      font-size: inherit;
+    }
+  }
+}

@@ -1,8 +1,24 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
+// PCで左右の列が入りきらなくなったら、SPと同じくロゴを上にして縦に並べる。
+// 切り替え幅は中身の寸法から決まる値（新しいデザイン上のブレイクポイントではない）
+// - 左の列はボタン2つ（240px + 間16px + 242px = 498px）より狭くならない
+// - 右の列はロゴ（347px）より狭くならない
+// - 列の間92px、.final-cta の左右の余白120px×2
+$final-cta-main-min-width: 240px + 16px + 242px;
+$final-cta-side-min-width: 347px;
+$final-cta-stack-max: $final-cta-main-min-width + 92px + $final-cta-side-min-width + $content-padding-pc * 2 - 1px;
+
+@mixin final-cta-stack {
+  @media (min-width: $breakpoint-switch) and (max-width: $final-cta-stack-max) {
+    @content;
+  }
+}
+
 .final-cta {
   padding: 120px;
+  overflow: hidden;
   background: $gradient-primary;
   color: $color-white;
 
@@ -14,43 +30,62 @@
   &__inner {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
+    // 入りきらない幅でも左端（タイトルの位置）を左の余白120pxに保つ（はみ出しは右側へ）
+    justify-content: safe center;
     gap: 92px;
     max-width: $content-max-width;
     height: 298px;
     margin: 0 auto;
 
+    // 縦並びの間隔は、PCのロゴと電話番号の間隔（50px）に揃える
+    @include final-cta-stack {
+      flex-direction: column;
+      align-items: center;
+      gap: 50px;
+      height: auto;
+    }
+
     @include sp {
       flex-direction: column;
       align-items: center;
       gap: 16px;
-      max-width: none;
+      max-width: $content-max-width-sp;
       height: auto;
     }
   }
 
+  // 1440pxではFigmaの541px。幅が足りない時はボタン2つの幅まで縮み、文章を折り返す
   &__main {
     display: flex;
-    flex: none;
+    flex: 0 1 541px;
     flex-direction: column;
     gap: 28px;
-    width: 541px;
 
+    // 縦並びの時は SP と同じく、タイトル・ボタンを中央に並べる
+    // （本文はかたまりの幅いっぱい・行頭左揃え。SP と同じ）
+    @include final-cta-stack {
+      flex: none;
+      align-items: center;
+      width: fit-content;
+      max-width: 100%;
+    }
+
+    // SP は 09 Partners の連絡パネルと同じ477pxを上限に中央寄せ
     @include sp {
+      flex: none;
       align-items: center;
       gap: 16px;
       width: 100%;
+      max-width: 477px;
       padding: 31px 0;
     }
   }
 
-  // Figma 上で、H2 の文字幅（628px）は左カラム（541px）より広い
   &__title {
     margin: 0;
     font-size: 34px;
     font-weight: $font-weight-bold;
     line-height: 41px;
-    white-space: nowrap;
 
     @include sp {
       font-size: 20px;
@@ -107,19 +142,26 @@
     }
   }
 
+  // 1440pxではFigmaの567px。幅が足りない時はロゴの幅まで縮む
   &__side {
     display: flex;
-    flex: none;
+    flex: 0 1 567px;
     flex-direction: column;
     align-items: center;
     gap: 50px;
-    width: 567px;
     height: 298px;
 
+    // 縦並びの時はSPと同じくロゴを上に
+    @include final-cta-stack {
+      flex: none;
+      order: -1;
+      height: auto;
+    }
+
     @include sp {
+      flex: none;
       order: -1;
       gap: 16px;
-      width: auto;
       height: auto;
     }
   }

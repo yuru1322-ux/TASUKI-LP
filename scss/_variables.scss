@@ -15,7 +15,6 @@ $color-divider:        #EEE2E2; // 05_Strengths SP 強み同士の区切り線�
 $color-line-pale:      #F0E4E4; // 06_Medical_Coverage SP CTA行の上下線（Figma実測）
 $color-line-connector: #D9C9C9; // 08_On-call SP ステップ間の縦線（Figma実測）
 $color-cross:          #A4A4A4; // 02_Services 中央の「×」（Figma実測）
-$color-connector:      #B7B0B0; // 02_Services SP 中央の菱形の線（Figma実測）
 $color-chip-accent:    #FF6700; // 04_Trial_Rehabilitation 吹き出しの枠（Figma実測の吹き出し1に3つを統一）
 $color-white:          #FFFFFF;
 $color-black:          #000000; // 影の色（rgbaで透過して使用）
@@ -35,7 +34,14 @@ $font-weight-bold:    700;
 $content-max-width: 1200px;
 $content-padding-pc: 120px;
 $content-padding-sp: 20px;
+// SPのコンテンツ幅の上限（FVの写真の上限幅に合わせ、全セクションの __inner で共通に使う）
+$content-max-width-sp: 700px;
 
 // Breakpoints
 $breakpoint-sp: 375px;
 $breakpoint-pc: 1440px;
+
+// PC⇄SPの一律の切り替え幅。文字・画像サイズは変えず固定のPC/SPデザインを持ち、
+// この幅で切り替える（960px未満はSPデザイン）。960pxという数値は、Figmaの
+// 1440pxデザインをできるだけ維持し、崩れる直前で切り替わるよう実測して決めた値。
+$breakpoint-switch: 960px;

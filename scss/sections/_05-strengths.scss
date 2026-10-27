@@ -1,8 +1,61 @@
+@use "sass:math";
 @use "../variables" as *;
 @use "../mixins" as *;
 
+// PCで図が文章の横に入りきらなくなったら、図を文章の下へ回して元の大きさのまま中央に置く。
+// 見出しは各行の末尾3文字（句点を含む）まで次の行に落ちてよく、文章の列がそれより
+// 狭くなる幅で下へ回す。各見出しの「最長の行から末尾3文字を除いた幅」は実測値。
+// 切り替え幅は中身の寸法から決まる値（新しいデザイン上のブレイクポイントではない）
+
+// 強み01：見出し503px（611px − 末尾3文字）＋イラスト・タグの枠554px（タグの左端〜
+// イラストの右端の440pxに、左右57pxずつ）。.strength--01 の幅は 100vw - 206px
+$strength01-text-min-width: 503px;
+$strength01-visual-width: 554px;
+$strength01-stack-max: $strength01-text-min-width + $strength01-visual-width + 206px - 1px;
+
+// 強み02・03のイラスト・循環図はPCでは常にFigmaの大きさのまま（縮めない）。
+// 文章の列は残りの幅を使う
+
+// 強み02：見出し324px（431px − 末尾3文字）＋右余白100px ＋ 間120px ＋ イラスト474px。
+// .strength--02 の幅は 100vw - 206px。イラストと文章の間は1440pxでFigmaどおり140px、
+// それより狭い時は120px
+$strength02-img-size: 474px;
+$strength02-gap: 140px;
+$strength02-gap-narrow: 120px;
+$strength02-text-min-width: 324px + 100px;
+$strength02-stack-max: $strength02-text-min-width + $strength02-gap-narrow + $strength02-img-size + 206px - 1px;
+
+@mixin below-pc-design {
+  @media (max-width: $breakpoint-pc - 1px) {
+    @content;
+  }
+}
+
+// 強み03：見出し480px（596px − 末尾3文字）＋ 間107px ＋ 循環図473px。
+// .strengths__inner の幅は 100vw - 240px
+$strength03-cycle-width: 473px;
+$strength03-text-min-width: 480px;
+$strength03-stack-max: $strength03-text-min-width + 107px + $strength03-cycle-width + 240px - 1px;
+
+// 図を文章の下へ回した時の、文章と図の間（強み01の文章の下余白26pxに揃える）
+$strength-stack-gap: 26px;
+
+// 縦並びの時の強み03の文章の列の上限（強み01の文章のかたまりの幅 659.6px の実測値に揃える）
+$strength-stack-text-max-width: 660px;
+
+// 01〜03で縦並びに切り替える幅を揃える。3つのうち最も広い幅に合わせ、
+// どの見出しも末尾3文字より多く折り返さないようにする
+$strength-stack-max: math.max($strength01-stack-max, $strength02-stack-max, $strength03-stack-max);
+
+@mixin strength-stack {
+  @media (min-width: $breakpoint-switch) and (max-width: $strength-stack-max) {
+    @content;
+  }
+}
+
 .strengths {
   padding: 96px 120px;
+  overflow: hidden;
   background-color: $color-white;
 
   // 下端の赤い帯（波）は 06 側に置く
@@ -13,6 +66,10 @@
   &__inner {
     max-width: $content-max-width;
     margin: 0 auto;
+
+    @include sp {
+      max-width: $content-max-width-sp;
+    }
   }
 
   &__list {
@@ -53,10 +110,12 @@
     }
   }
 
-  // 強み01・02は Figma 上で 1234px 幅（内側の1200pxより34px広い）
+  // 強み01・02は Figma 上で 1234px 幅（内側の1200pxより34px広い＝左右に17pxずつ
+  // はみ出す）。親要素(.strengths__inner)の100%基準だとこのはみ出しを再現できない
+  // ため、画面幅から.strengthsの左右余白（120px×2）を引いた値を基準に計算する
   &--01,
   &--02 {
-    width: 1234px;
+    width: min(1234px, 100vw - 206px);
   }
 
   &--01 {
@@ -64,24 +123,40 @@
     height: 480px;
     padding: 76px 0;
 
+    @include strength-stack {
+      flex-direction: column;
+      height: auto;
+    }
+
     @include sp {
       height: auto;
-      padding: 8px 0 0;
+      padding: 8px 0 0px;
     }
   }
 
   &--02 {
     display: flex;
     align-items: center;
-    gap: 140px;
+    gap: $strength02-gap;
     height: 499px;
     padding: 25px 0;
+
+    @include below-pc-design {
+      gap: $strength02-gap-narrow;
+    }
+
+    @include strength-stack {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $strength-stack-gap;
+      height: auto;
+    }
 
     @include sp {
       align-items: stretch;
       gap: 12px;
       height: auto;
-      padding: 8px 0 0;
+      padding: 8px 0 0px;
     }
   }
 
@@ -89,14 +164,21 @@
     display: flex;
     align-items: center;
     gap: 64px;
-    width: 1200px;
+    width: 100%;
+    max-width: 1200px;
     padding: 20px 0;
+
+    @include strength-stack {
+      flex-direction: column;
+      align-items: stretch;
+      gap: $strength-stack-gap;
+    }
 
     @include sp {
       align-items: stretch;
       gap: 12px;
       width: auto;
-      padding: 8px 0 0;
+      padding: 8px 0 0px;
     }
   }
 
@@ -146,6 +228,11 @@
   &--03 &__number {
     top: -32px;
     left: 402px;
+
+    // 縦並びの時は中央に寄せた文章の列（上限幅）に合わせて動かす（数字は文章の枠の外にあるため）
+    @include strength-stack {
+      left: calc(402px + (100% - #{$strength-stack-text-max-width}) / 2);
+    }
   }
 
   &--01 &__number,
@@ -168,27 +255,57 @@
     }
   }
 
+  // 幅が足りない時は写真・図との比率を保って縮む（横並びは崩さない）
   &--01 &__text {
-    flex: none;
+    flex: 617 1 0;
     gap: 10px;
-    width: 617px;
     padding: 26px 0;
+
+    // 縦並びの時は文章のかたまりを中央に置く（行頭は左揃えのまま）
+    @include strength-stack {
+      flex: none;
+      align-self: center;
+      width: fit-content;
+      max-width: 100%;
+    }
   }
 
+  // 文章の列はイラスト（固定474px）と間を除いた残りの幅
   &--02 &__text {
-    flex: none;
+    width: calc(min(1234px, 100vw - 206px) - #{$strength02-gap} - #{$strength02-img-size});
     align-items: flex-start;
     justify-content: center;
     gap: 10px;
-    width: 620px;
     height: 194px;
     padding-right: 100px;
+
+    @include below-pc-design {
+      width: calc(min(1234px, 100vw - 206px) - #{$strength02-gap-narrow} - #{$strength02-img-size});
+    }
+
+    // 縦並びの時は文章のかたまりを中央に置く（行頭は左揃えのまま。
+    // 右余白100pxは横並び用のため外す）
+    @include strength-stack {
+      align-self: center;
+      width: fit-content;
+      max-width: 100%;
+      height: auto;
+      padding-right: 0;
+    }
   }
 
+  // 文章の列は循環図（固定473px）と間107pxを除いた残りの幅
+  // （余白43pxはFigma上そのまま残す）
   &--03 &__text {
-    flex: none;
+    width: calc(min(1200px, 100vw - 240px) - 107px - #{$strength03-cycle-width});
     gap: 16px;
-    width: 620px;
+
+    // 縦並びの時は文章のかたまりを中央に置く（行頭は左揃えのまま）
+    @include strength-stack {
+      align-self: center;
+      width: fit-content;
+      max-width: min(100%, #{$strength-stack-text-max-width});
+    }
   }
 
   // ゴースト数字の前面に出す
@@ -301,40 +418,63 @@
   // 強み01：イラスト＋タグ
   &__visual {
     position: relative;
-    flex: none;
-    width: 617px;
+    // 文章と同じ比率で広がり、イラスト・タグの枠（554px）より狭くならない（見切れ防止）
+    flex: 617 1 0;
+    min-width: $strength01-visual-width;
     height: 383px;
 
+    @include strength-stack {
+      flex: none;
+      width: $strength01-visual-width;
+      margin: 0 auto;
+    }
+
     @include sp {
-      width: auto;
+      flex: none;
+      // イラスト・タグはFigma SP（幅335px）基準の絶対配置のため、枠を335pxに留めて中央寄せ
+      width: 100%;
+      min-width: 0;
+      max-width: 335px;
+      margin: 0 auto;
       height: 208px;
     }
   }
 
+  // PCのイラスト・タグは右端基準で配置し、列が狭くなっても見切れないようにする
+  // （1440px時の位置はFigmaどおり。列幅617pxから left + 幅 を引いた値）
   &--01 &__img {
     position: absolute;
     top: 0;
-    left: 177px;
+    right: 57px;
     width: 383px;
     height: 383px;
 
     @include sp {
+      right: auto;
       left: 96px;
       width: 208px;
       height: 208px;
     }
   }
 
-  // SP は本文の後ろに回す（DOM 上は先頭）
+  // PCは常にFigmaの大きさ（474px）。SP・下へ回した時は本文の後ろに置く（DOM 上は先頭）
   &--02 &__img {
     display: block;
     flex: none;
-    width: 474px;
-    height: 474px;
+    width: $strength02-img-size;
+    height: $strength02-img-size;
+
+    @include strength-stack {
+      order: 1;
+      margin: 0 auto;
+    }
 
     @include sp {
       order: 1;
       width: 100%;
+      // PCの474pxを上限に、それ未満は画面幅いっぱいまで広がる
+      max-width: 474px;
+      margin: 0 auto;
       height: auto;
       aspect-ratio: 1;
     }
@@ -360,7 +500,8 @@
     line-height: 28px;
     text-align: center;
 
-    // SP は文字幅に合わせた小さなタグ
+    // SP は文字幅に合わせた小さなタグ（PCは140×37の固定サイズのため、
+    // 余白はPCの値へ対応させず、文字サイズのみ滑らかに変化させる）
     @include sp {
       width: auto;
       height: auto;
@@ -373,54 +514,65 @@
 
     &--1 {
       top: 29px;
-      left: 154px;
+      right: 323px;
 
       @include sp {
         top: 16px;
+        right: auto;
         left: 84px;
       }
     }
 
     &--2 {
       top: 110px;
-      left: 230px;
+      right: 247px;
 
       @include sp {
         top: 60px;
+        right: auto;
         left: 125px;
       }
     }
 
     &--3 {
       top: 192px;
-      left: 120px;
+      right: 357px;
 
       @include sp {
         top: 104px;
+        right: auto;
         left: 65px;
       }
     }
 
     &--4 {
       top: 274px;
-      left: 230px;
+      right: 247px;
 
       @include sp {
         top: 149px;
+        right: auto;
         left: 125px;
       }
     }
   }
 
-  // 強み03：循環図
+  // 強み03：循環図。PCは常にFigmaの大きさ（473×380px）
   &__cycle {
     display: block;
     flex: none;
-    width: 473px;
+    width: $strength03-cycle-width;
     height: 380px;
+
+    @include strength-stack {
+      margin: 0 auto;
+    }
 
     @include sp {
       width: 100%;
+      // PCの473pxを上限に、それ未満は画面幅いっぱいまで広がる
+      max-width: 473px;
+      margin: 0 auto;
       height: auto;
       aspect-ratio: 335 / 269;
     }
