@@ -187,4 +187,10 @@ index.html
 
 ## AI Coding Rules
 
-@AI-CODING-RULES.md
+HTML / SCSS / Vanilla JavaScriptのコーディングルール（命名規則・SCSS構成・堅牢なUI実装・
+セキュリティ・Git操作・WordPress化時のルール等）は、`.claude/skills/web-coding/`の
+Skill（`SKILL.md`と`references/*.md`）を正とする。コーディング作業時はClaude Codeが
+このSkillを使用し、必要なreferenceを読み込む。
+
+`AI-CODING-RULES.md`は上記Skillへ移行済みの原典（アーカイブ）として残しており、
+通常の作業では読み込まない。
