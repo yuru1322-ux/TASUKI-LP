@@ -20,9 +20,12 @@
   // PC の大きな曲線は SP では使わない（SP は写真の上のリボンを使う）
   &__curve {
     position: absolute;
-    left: 0;
-    width: 100%;
+    // 1440px未満では縮めずに中央でそろえ、左右のはみ出しは .fv の overflow で隠す
+    // （1440px以上は従来どおり画面幅いっぱいに広げる）
+    left: 50%;
+    width: max(1440px, 100%);
     height: auto;
+    transform: translateX(-50%);
     pointer-events: none;
 
     @include sp {
@@ -77,7 +80,10 @@
     }
   }
 
+  // 幅が狭く写真と重なる場合も、コピーを写真より前面に出す
   &__copy {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -87,6 +93,17 @@
 
     @include sp {
       display: contents;
+    }
+  }
+
+  // SPのコピーは写真（.fv__visual）と同じ700pxを上限にし、中央寄せで左端を写真にそろえる
+  &__title,
+  &__lead,
+  &__body {
+    @include sp {
+      align-self: center;
+      width: 100%;
+      max-width: $content-max-width-sp;
     }
   }
 
@@ -103,6 +120,32 @@
       font-size: 36px;
       line-height: 43px;
     }
+  }
+
+  // 写真と重なった時に読めるよう、FV背景と同じ色を行ごとにマーカー風に敷く（lead・body共通）
+  // PCはマーカーの高さを行の高さより4px低く抑え、行ごとに隙間を作る
+  // （インラインの背景はフォントの高さ（文字サイズの約1.45倍）で塗られ、line-heightだけでは隙間ができないため）
+  &__marker {
+    background: linear-gradient(rgba($color-pale-pink, 0.8), rgba($color-pale-pink, 0.8)) center / 100% var(--fv-marker-height) no-repeat;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+
+    @include sp {
+      background-size: 100% 100%;
+    }
+  }
+
+  &__lead &__marker {
+    --fv-marker-height: 34px; // line-height 38px - 4px
+
+    // SPのリード文は写真と重ならないためハイライトなし
+    @include sp {
+      background: none;
+    }
+  }
+
+  &__body &__marker {
+    --fv-marker-height: 24px; // line-height 28px - 4px
   }
 
   &__lead {
@@ -124,7 +167,8 @@
     margin: 0;
     font-size: 20px;
     font-weight: $font-weight-regular;
-    line-height: 24px;
+    // マーカー（.fv__marker）の行と行の間に隙間を作るため、Figmaの24pxより広げている
+    line-height: 28px;
 
     @include sp {
       order: 3;
@@ -139,14 +183,16 @@
     display: flex;
     gap: 16px;
     padding: 9px 0;
-    background-color: $color-white;
 
+    // SPは .fv__service と同じ600pxを上限に中央寄せ
     @include sp {
       order: 6;
+      align-self: center;
+      width: 100%;
+      max-width: 600px;
       flex-direction: column;
       gap: 12px;
       padding: 7px 0;
-      background: none;
     }
 
     .button {
@@ -157,26 +203,28 @@
   }
 
   // 写真（SP では全幅。リボンを写真の下端に重ねる）
+  // 700pxを上限とし、それ以上は中央寄せで左右を余白にする（拡大しすぎによる画質低下・間延び防止）
   &__visual {
     @include sp {
       position: relative;
       order: 4;
-      margin: 0 -20px 32px;
+      margin: 0 max(#{-$content-padding-sp}, calc((100% - #{$content-max-width-sp}) / 2)) 32px;
     }
   }
 
   &__photo {
     position: absolute;
     top: 0;
-    left: max(756px, calc(100% - 684px));
+    // PCは右端に沿わせ、画面幅にかかわらず684px固定（幅が狭い時はコピーの下に重なる）
+    right: 0;
     width: 684px;
-    height: 605px;
+    aspect-ratio: 684 / 605;
+    height: auto;
 
     @include sp {
       position: static;
       display: block;
       width: 100%;
-      height: auto;
       aspect-ratio: 375 / 294;
     }
   }
@@ -184,13 +232,16 @@
   &__ribbon {
     display: none;
 
+    // 幅は写真の外側まで画面いっぱいに広げ、高さは写真の幅に合わせた比率（375:84）のまま止める
+    // （写真が700pxで止まった後は横だけ伸びる。はみ出しは .fv の overflow で隠す）
     @include sp {
       position: absolute;
       bottom: 1px;
-      left: 0;
+      left: 50%;
       display: block;
-      width: 100%;
-      height: auto;
+      width: 100vw;
+      height: calc(100% * 84 / 294); // 写真の高さ（375:294）に対するリボンの高さ
+      transform: translateX(-50%);
       pointer-events: none;
     }
   }
@@ -202,8 +253,12 @@
     padding-top: 99px;
     color: $color-text-dark;
 
+    // SPは600pxを上限に中央寄せ
     @include sp {
       order: 5;
+      align-self: center;
+      width: 100%;
+      max-width: 600px;
       margin-bottom: 32px;
       padding-top: 0;
       border-radius: 16px;
@@ -213,12 +268,14 @@
   }
 
   &__service-inner {
-    width: 917px;
+    // PCの917pxを上限に、それ未満は画面幅いっぱいまで広がる
+    width: 100%;
+    max-width: 917px;
     margin: 0 auto;
     padding: 32px;
 
     @include sp {
-      width: auto;
+      max-width: none;
       margin: 0;
       padding: 28px 24px;
     }
@@ -230,7 +287,10 @@
     font-weight: $font-weight-bold;
     line-height: 40px;
 
+    // SPは .fv__tags（space-around）の1列目の開始位置に左端をそろえる
+    // （2列分108px×2と列間24pxを引いた空きの1/4が、1列目の左側の余白になる）
     @include sp {
+      padding-left: calc((100% - (108px * 2 + 24px)) / 4);
       font-size: 18px;
       line-height: 22px;
     }
@@ -259,6 +319,8 @@
 
     @include sp {
       grid-template-columns: repeat(2, 108px);
+      // カード幅が広がった時は2列を均等に配置する（列間は最小24px）
+      justify-content: space-around;
       gap: 14px 24px;
       margin-top: 20px;
     }
@@ -268,7 +330,8 @@
     font-size: 32px;
     font-weight: $font-weight-regular;
     line-height: 32px;
-    white-space: nowrap;
+    // 列幅に収まらない場合は折り返す（PCは通常収まるが、幅が狭い時の保険）
+    white-space: normal;
 
     @include sp {
       font-size: 15px;

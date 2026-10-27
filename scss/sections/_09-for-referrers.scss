@@ -3,6 +3,7 @@
 
 .partners {
   padding: 96px 120px;
+  overflow: hidden;
   background-color: $color-white;
 
   @include sp {
@@ -23,7 +24,10 @@
       align-items: stretch;
       justify-content: flex-start;
       gap: 22px;
-      width: auto;
+      width: 100%;
+      // border-box のため、左右の余白を含めた幅にする（中身は700pxで止まる）
+      max-width: $content-max-width-sp + $content-padding-sp * 2;
+      margin: 0 auto;
       padding: 40px 20px 48px;
     }
   }
@@ -85,6 +89,8 @@
 
     @include sp {
       width: auto;
+      // PCの496pxを上限に、読みやすい行長を保つ
+      max-width: 496px;
       font-size: 14px;
       line-height: 25px;
     }
@@ -124,6 +130,8 @@
 
     @include sp {
       width: auto;
+      // PCの559pxを上限に、読みやすい行長を保つ
+      max-width: 559px;
       font-size: 13.5px;
       line-height: 24px;
     }
@@ -148,9 +156,12 @@
       order: 1;
       justify-content: flex-start;
       gap: 10px;
-      width: auto;
+      // PCの477pxを上限に、それ未満は画面幅いっぱいまで広がる
+      width: 100%;
+      max-width: 477px;
+      margin: 0 auto;
       height: auto;
-      padding: 20px;
+      padding: 20px 20px;
       border-radius: 10px;
       background-color: $color-pale-pink;
     }

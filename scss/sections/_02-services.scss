@@ -2,8 +2,24 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
+// PCで幅が狭くなった時に見切れないよう、次の順で縮める（SPへの切り替えまで1行を保つ）
+//   1. カードを450px → 325px（写真も320px → 271pxまで一緒に縮む）
+//   2. セクション左右の余白を120px → 69.5px
+//   3. 中央の「×」を176.78px → 切り替え幅（960px）で約123px（下限はSPと同じ25px）
+$services-card-width: 450px;
+// リストが折り返さない最小幅。最長の項目「✓ 褥瘡処置・点滴などの医療処置」の実測238.52px
+// ＋リスト左右の余白32px＋カード内側の余白48px＋枠線6px＝324.52pxを切り上げ
+$services-card-min-width: 325px;
+$services-cross-width: 176.78px;
+$services-cross-min-width: 25px;
+$services-gap: 24px;
+$services-padding-min: 69.5px;
+// カードが最小・×が最大の時の1行の幅（874.78px）
+$services-row-width: $services-card-min-width * 2 + $services-gap * 2 + $services-cross-width;
+
 .services {
-  padding: 40px 120px 169px;
+  padding: 40px clamp(#{$services-padding-min}, (100% - #{$services-row-width}) / 2, #{$content-padding-pc}) 169px;
+  overflow: hidden;
   background-color: $color-white;
 
   @include sp {
@@ -20,7 +36,8 @@
 
     @include sp {
       gap: 22px;
-      padding: 0;
+      max-width: $content-max-width-sp;
+      padding: 0px 0;
     }
   }
 
@@ -28,62 +45,49 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 24px;
+    gap: $services-gap;
     padding: 10px 0;
 
     @include sp {
       flex-direction: column;
       align-items: stretch;
       gap: 22px;
-      padding: 0;
+      padding: 0px 0;
     }
   }
 
   // 中央の「×」（Figma: 125×125 の十字を -45° 回転、線幅10px）
+  // カードと余白が下限まで縮んだ後は、残りの幅まで縮める（下限はSPと同じ25px）
   &__cross {
     position: relative;
     flex: none;
-    width: 176.78px;
-    height: 176.78px;
+    width: clamp(#{$services-cross-min-width}, 100% - #{$services-card-min-width * 2 + $services-gap * 2}, #{$services-cross-width});
+    aspect-ratio: 1;
 
-    // SP は菱形（◇）。16×16の枠を45°回した形で、高さは22px
+    // SP も PC と同じ「×」（Figmaの菱形から変更）。線32px・太さ3pxで、外寸は約25px四方
     @include sp {
       align-self: center;
-      width: 22px;
-      height: 22px;
+      width: $services-cross-min-width;
     }
 
+    // 線の長さ・太さは枠の大きさに比例（PC: 125px・10px）。下限はSPの32px・3px
     &::before,
     &::after {
       content: "";
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 125px;
-      height: 10px;
-      margin: -5px 0 0 -62.5px;
+      width: max(32px, 125 / 176.78 * 100%);
+      height: max(3px, 10 / 176.78 * 100%);
       background-color: $color-cross;
     }
 
     &::before {
-      transform: rotate(45deg);
-
-      @include sp {
-        box-sizing: border-box;
-        width: 16px;
-        height: 16px;
-        margin: -8px 0 0 -8px;
-        border: 2px solid $color-connector;
-        background-color: $color-white;
-      }
+      transform: translate(-50%, -50%) rotate(45deg);
     }
 
     &::after {
-      transform: rotate(-45deg);
-
-      @include sp {
-        display: none;
-      }
+      transform: translate(-50%, -50%) rotate(-45deg);
     }
   }
 }
@@ -92,8 +96,10 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  flex: none;
   box-sizing: border-box;
-  width: 450px;
+  // 幅が狭くなると最初にカードが325pxまで縮む（×は最大のまま）
+  width: clamp(#{$services-card-min-width}, (100% - #{$services-gap * 2 + $services-cross-width}) / 2, #{$services-card-width});
   padding: 24px;
   border: 3px solid;
   border-radius: 4px;
@@ -101,7 +107,10 @@
   box-shadow: 4px 4px 4px rgba($color-black, 0.25);
 
   @include sp {
-    width: auto;
+    // カード幅はPCの450pxを上限に、それ未満は画面幅いっぱいまで広がる
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
     padding: 20px;
     gap: 14px;
   }
@@ -126,7 +135,7 @@
 
     @include sp {
       padding: 6px 16px;
-      border-radius: 0;
+      border-radius: 0px;
       font-size: 17px;
       line-height: 20px;
     }
@@ -138,7 +147,7 @@
     background-color: $color-primary;
 
     @include sp {
-      border: 0;
+      border-width: 0px;
     }
   }
 
@@ -146,10 +155,13 @@
     background-color: $color-rehab-orange;
   }
 
+  // PCは320pxを上限に、カードが狭い時はカードの内側の幅まで縮む（正方形のまま）
   &__img {
     display: block;
-    width: 320px;
-    height: 320px;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    aspect-ratio: 1;
     margin: 0 auto;
 
     // SP は枠の比率が異なる（FILL＝cover で切り出す）
@@ -183,7 +195,7 @@
 
     @include sp {
       gap: 11px;
-      padding: 0;
+      padding: 0 0px;
     }
   }
 
@@ -198,16 +210,19 @@
       line-height: 17px;
     }
 
+    // PC/SP共通で細い ✓ + 空白（Figma SPの形に統一）。色はカードの枠と同じ
     &::before {
-      content: "\2714\FE0E";
+      content: "\2713\20";
       // 対応ブラウザでは装飾として読み上げ対象から外す
-      content: string.unquote('"\\2714\\FE0E" / ""');
-
-      // SP は細い ✓ + 空白
-      @include sp {
-        content: "\2713\20";
-        content: string.unquote('"\\2713\\20" / ""');
-      }
+      content: string.unquote('"\\2713\\20" / ""');
     }
+  }
+
+  &--nursing &__item::before {
+    color: $color-primary;
+  }
+
+  &--rehabilitation &__item::before {
+    color: $color-rehab-orange;
   }
 }

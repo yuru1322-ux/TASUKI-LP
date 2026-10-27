@@ -1,6 +1,9 @@
 @use "../variables" as *;
 @use "../mixins" as *;
 
+// SPのボタン・写真（吹き出しの枠）の上限幅（見出し・タイトル・本文は他セクションと同じ700px）
+$trial-sp-max-width: 450px;
+
 .trial {
   padding: 50px 120px 63px;
   background: $gradient-primary;
@@ -18,6 +21,7 @@
 
     @include sp {
       gap: 22px;
+      max-width: $content-max-width-sp;
     }
 
     // SP は英字タイトル行の幅が本文の列より6px広い（左右に3pxずつはみ出す）
@@ -43,15 +47,17 @@
 
   &__copy {
     display: flex;
+    // 写真（592px）との比率を保ったまま、余白(gap 64px)を除いた残りを分け合う
+    // （幅が狭い時は横並びのまま比率を保って縮む。折り返さない）
     flex: none;
+    width: calc((100% - 64px) * 544 / 1136);
     flex-direction: column;
     gap: 50px;
-    width: 544px;
     color: $color-white;
 
     @include sp {
-      gap: 22px;
       width: auto;
+      gap: 22px;
     }
   }
 
@@ -94,6 +100,9 @@
     height: 71px;
 
     @include sp {
+      align-self: center;
+      width: 100%;
+      max-width: $trial-sp-max-width;
       height: auto;
     }
 
@@ -106,20 +115,27 @@
 
   &__photo {
     display: block;
+    // 文章との比率を保ったまま、余白(gap 64px)を除いた残りを分け合う
+    // （img要素はflexコンテナ内で%指定のwidthが正しく解決されないため、
+    // .trial__innerの最大幅(1200px)とページ左右余白(120px×2)から直接計算する）
     flex: none;
-    width: 592px;
+    width: calc((min(1200px, 100vw - 240px) - 64px) * 592 / 1136);
     height: 480px;
     object-fit: cover;
 
     @include sp {
       width: 100%;
+      // 写真幅は本文と同じ450pxを上限に、それ未満は画面幅いっぱいまで広がる
+      max-width: $trial-sp-max-width;
       height: auto;
+      margin: 0 auto;
       aspect-ratio: 291 / 396;
       border-radius: 8px;
     }
   }
 
   // SP は写真と同じ大きさの枠にして、吹き出しを写真基準で配置する
+  // （写真と中央寄せ・上限幅を揃え、拡大しても吹き出しがずれないようにする）
   &__chips {
     margin: 0;
     padding: 0;
@@ -129,7 +145,10 @@
       position: absolute;
       bottom: 0;
       left: 0;
+      right: 0;
       width: 100%;
+      max-width: $trial-sp-max-width;
+      margin: 0 auto;
       aspect-ratio: 291 / 396;
       pointer-events: none;
     }
@@ -159,9 +178,11 @@
       line-height: 18px;
     }
 
+    // 位置は写真基準（写真は幅が変わるため、写真の位置に対する割合・
+    // 右端からの距離で指定し、写真の比率が変わっても追従するようにする）
     &--1 {
       top: 8px;
-      left: 592px;
+      left: 49.3333%;
 
       @include sp {
         top: 31px;
@@ -171,7 +192,8 @@
 
     &--2 {
       top: 206px;
-      left: 986px;
+      right: 14px;
+      left: auto;
 
       @include sp {
         top: 191px;
@@ -182,7 +204,7 @@
 
     &--3 {
       top: 334px;
-      left: 673px;
+      left: 56.0833%;
 
       @include sp {
         top: 321px;

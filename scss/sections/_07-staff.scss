@@ -8,10 +8,11 @@
   overflow: hidden;
   background-color: $color-white;
 
-  // SP は下端の波（53px）の分だけ余白を残す
+  // SP は下端の波の分だけ余白を残す（波は幅いっぱいに拡大され実際の高さも
+  // 画面幅に応じて大きくなるため、その高さ分だけ余白を確保する）
   @include sp {
     min-height: 0;
-    padding: 0 0 53px;
+    padding: 0 0 wave-space();
   }
 
   &__inner {
@@ -24,7 +25,8 @@
 
     @include sp {
       gap: 24px;
-      max-width: none;
+      // border-box のため、左右の余白を含めた幅にする（中身は700pxで止まる）
+      max-width: $content-max-width-sp + $content-padding-sp * 2;
       padding: 40px 20px 48px;
     }
   }

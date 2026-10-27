@@ -9,10 +9,12 @@
   overflow: hidden;
   background-color: $color-white;
 
-  // SP は上の波を本文の前に置き、下の波の分（53px）だけ下に余白を残す
+  // SP は上の波を本文の前に置き（position:staticで自然に高さ分の余白ができる）、
+  // 下の波は幅いっぱいに拡大され実際の高さも画面幅に応じて大きくなるため、
+  // その高さ分だけ下に余白を残す
   @include sp {
     min-height: 0;
-    padding: 0 0 53px;
+    padding: 0 0 wave-space();
   }
 
   &__wave {
@@ -51,6 +53,8 @@
       align-items: stretch;
       gap: 22px;
       width: auto;
+      // border-box のため、左右の余白を含めた幅にする（中身は700pxで止まる）
+      max-width: $content-max-width-sp + $content-padding-sp * 2;
       padding: 40px 20px 48px;
     }
   }
@@ -106,7 +110,7 @@
 
       @include sp {
         width: 300px;
-        padding: 20px;
+        padding: 20px 20px;
       }
     }
   }
@@ -160,7 +164,7 @@
 
     @include sp {
       gap: 9px;
-      padding: 0;
+      padding: 0 0px;
     }
   }
 
@@ -240,7 +244,7 @@
     // SP は電話（左）とボタン（右）を両端に置く
     @include sp {
       justify-content: space-between;
-      gap: 0;
+      gap: 0px;
       height: auto;
       padding: 15px 0;
       border-color: $color-line-pale;

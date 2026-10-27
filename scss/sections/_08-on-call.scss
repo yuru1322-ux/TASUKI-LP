@@ -4,6 +4,7 @@
 .oncall {
   min-height: 607px;
   padding: 50px 120px;
+  overflow: hidden;
   background: $gradient-primary;
   color: $color-white;
 
@@ -23,7 +24,8 @@
     @include sp {
       gap: 20px;
       height: auto;
-      max-width: none;
+      // border-box のため、左右の余白を含めた幅にする（中身は700pxで止まる）
+      max-width: $content-max-width-sp + $content-padding-sp * 2;
       padding: 40px 20px 48px;
     }
   }
@@ -42,6 +44,8 @@
 
     @include sp {
       width: auto;
+      // PCの800pxを上限に、それ未満は画面幅いっぱいまで広がる
+      max-width: 800px;
       font-size: 14px;
       line-height: 25px;
     }

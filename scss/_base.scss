@@ -8,6 +8,15 @@
   }
 }
 
+// SP でだけ有効な改行（PC では隠す）
+.u-br-sp {
+  display: none;
+
+  @include sp {
+    display: inline;
+  }
+}
+
 body {
   color: $color-text-primary;
   font-family: $font-family-base;

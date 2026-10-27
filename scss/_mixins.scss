@@ -1,9 +1,18 @@
+@use "sass:math";
 @use "variables" as *;
 
-// SP（1439px以下）。PC（1440px以上）の値をベースに書き、SP側をここで上書きする。
-// 375px〜1439pxの間の切り替え幅は、間の調整で決める。
+// SP（$breakpoint-switch未満）。PC（$breakpoint-switch以上）の値をベースに書き、
+// SP側をここで上書きする。文字・画像のサイズは画面幅に応じて滑らかに変えず、
+// PC/SPそれぞれ固定の値を持つ（間の幅は折り返し・幅の縮小など通常のCSSで対応する）。
 @mixin sp {
-  @media (max-width: #{$breakpoint-pc - 1px}) {
+  @media (max-width: #{$breakpoint-switch - 1px}) {
     @content;
   }
+}
+
+// 波（wave）SVG は viewBox の比率のまま width:100%; height:auto; で拡大されるため、
+// 画面幅が広がるほど実際の高さも大きくなる。その分だけ確保しておく余白を返す
+// （例: SP実測の高さ53px・幅375pxの波なら wave-space(53px) で常に波の実際の高さ分の余白になる）。
+@function wave-space($native-height: 53px, $native-width: $breakpoint-sp) {
+  @return math.div($native-height, $native-width) * 100vw;
 }

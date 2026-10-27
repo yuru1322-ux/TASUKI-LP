@@ -35,7 +35,14 @@ $font-weight-bold:    700;
 $content-max-width: 1200px;
 $content-padding-pc: 120px;
 $content-padding-sp: 20px;
+// SPのコンテンツ幅の上限（FVの写真の上限幅に合わせ、全セクションの __inner で共通に使う）
+$content-max-width-sp: 700px;
 
 // Breakpoints
 $breakpoint-sp: 375px;
 $breakpoint-pc: 1440px;
+
+// PC⇄SPの一律の切り替え幅。文字・画像サイズは変えず固定のPC/SPデザインを持ち、
+// この幅で切り替える（960px未満はSPデザイン）。960pxという数値は、Figmaの
+// 1440pxデザインをできるだけ維持し、崩れる直前で切り替わるよう実測して決めた値。
+$breakpoint-switch: 960px;
