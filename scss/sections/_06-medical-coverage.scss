@@ -38,14 +38,16 @@
     }
   }
 
-  // Figma 上で Inner は 1268px 幅（見出しは内側で 1200px）
+  // Figma 上で Inner は 1268px 幅（見出しは内側で 1200px、左右に34pxずつ内側）。
+  // 幅が狭い時も見出しの左端を他のセクションと同じ画面端から120pxに保つため、
+  // Inner は画面端から 120px - 34px = 86px の余白を残して縮む
   &__inner {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 46px;
-    width: 1268px;
+    width: min(1268px, 100% - (#{$content-padding-pc} - 34px) * 2);
     margin: 0 auto;
     padding: 23px 0;
 
@@ -56,6 +58,15 @@
       // border-box のため、左右の余白を含めた幅にする（中身は700pxで止まる）
       max-width: $content-max-width-sp + $content-padding-sp * 2;
       padding: 40px 20px 48px;
+    }
+
+    // 見出しは Inner の左右34px内側（上限1200px）
+    .section-heading {
+      width: min(#{$content-max-width}, 100% - 34px * 2);
+
+      @include sp {
+        width: auto;
+      }
     }
   }
 
@@ -223,10 +234,10 @@
     line-height: 24px;
     text-align: center;
 
+    // SP もPCと同じく中央揃え
     @include sp {
       font-size: 12.5px;
       line-height: 20px;
-      text-align: left;
     }
   }
 
@@ -241,10 +252,11 @@
     border-top: 1px solid $color-border;
     border-bottom: 1px solid $color-border;
 
-    // SP は電話（左）とボタン（右）を両端に置く
+    // SP もPCと同じく、電話とボタンを間隔24pxで中央に並べる。
+    // 入りきらない幅（375px付近）では、電話番号が折り返さないよう間隔を詰める
+    // （322px = 電話番号130.2px＋ボタン191.6pxの実測値）
     @include sp {
-      justify-content: space-between;
-      gap: 0px;
+      gap: min(24px, 100% - 322px);
       height: auto;
       padding: 15px 0;
       border-color: $color-line-pale;

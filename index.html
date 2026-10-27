@@ -877,7 +877,7 @@
             >
               <p class="section-heading__eyebrow">PARTNERS</p>
               <h2 class="section-heading__title">
-                「このケース、お願いできるかな？」<br />その段階でご相談ください。
+                「このケース、<br class="u-br-pc" />お願いできるかな？」<br />その段階でご相談ください。
               </h2>
             </div>
             <div class="partners__info">
@@ -897,11 +897,14 @@
             <p class="partners__tel">
               <a class="partners__tel-link" href="tel:0311112222"
                 ><span class="partners__tel-affix">[電話番号：</span
-                >03-1111-2222<span class="partners__tel-affix">]</span></a
+                ><span class="partners__tel-number"
+                  >03-1111-2222<span class="partners__tel-affix">]</span></span
+                ></a
               >
             </p>
             <p class="partners__hours">
-              受付時間 9:00-18:00／対応エリア八王子周辺
+              <span class="partners__hours-part">受付時間 9:00-18:00／</span
+              ><span class="partners__hours-part">対応エリア八王子周辺</span>
             </p>
             <a class="button button--primary button--large" href="#top"
               >新規利用について相談する</a
@@ -952,5 +955,14 @@
         </div>
       </section>
     </main>
+    <footer class="footer">
+      <div class="footer__inner">
+        <ul class="footer__links">
+          <li><a class="footer__link" href="#top">会社概要</a></li>
+          <li><a class="footer__link" href="#top">プライバシーポリシー</a></li>
+        </ul>
+        <p class="footer__copyright"><small>&copy; 2026 TASUKI</small></p>
+      </div>
+    </footer>
   </body>
 </html>

@@ -10,13 +10,15 @@
     padding: 0;
   }
 
-  // Figma 上で 608px の左カラムと 477px のパネルを横に並べ、全体を中央寄せ
+  // 左カラムと 477px のパネルを間40pxで横に並べ、全体を中央寄せ（全体の上限は
+  // Figma の 1085px）。幅が足りない時は両方が縮んで文章を折り返す
   // SP は縦に積み、連絡パネルを見出しの直後に回す（order）
   &__inner {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    width: 1085px;
+    gap: 40px;
+    width: min(1085px, 100%);
     margin: 0 auto;
 
     @include sp {
@@ -32,12 +34,13 @@
     }
   }
 
+  // 左カラムはパネルと間を除いた残りの幅（1440pxで 1085 - 40 - 477 = 568px）
   &__main {
     display: flex;
-    flex: none;
+    flex: 1 1 0;
     flex-direction: column;
     gap: 32px;
-    width: 608px;
+    min-width: 0;
 
     @include sp {
       display: contents;
@@ -48,12 +51,15 @@
     flex-shrink: 0;
   }
 
-  // 見出しと説明ブロックは、Figma 上で左カラム（608px）より広い 659px
+  // 見出しは左カラムの幅に収める（共通の --short の幅1200pxを打ち消す）。
+  // 高さは Figma の200pxを最小値にし、タイトルが折り返しても本文に重ならない
   &__heading {
-    width: 659px;
+    width: auto;
+    height: auto;
+    min-height: 200px;
 
     @include sp {
-      width: auto;
+      min-height: 0;
     }
   }
 
@@ -68,19 +74,23 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
-    width: 659px;
-    height: 277px;
+    // 文章が折り返して行が増えても、はみ出さずに伸びる
+    min-height: 277px;
 
+    // SP は本文・対象のかたまりを中央に置く（行頭は左揃えのまま。
+    // 幅は上の連絡パネルの上限477pxに合わせ、パネルと左端を揃える）
     @include sp {
       order: 2;
+      align-self: center;
       gap: 22px;
-      width: auto;
-      height: auto;
+      width: 100%;
+      max-width: 477px;
+      min-height: 0;
     }
   }
 
   &__body {
-    width: 496px;
+    max-width: 496px;
     margin: 0;
     color: $color-text-secondary;
     font-size: 20px;
@@ -121,7 +131,7 @@
   }
 
   &__target-list {
-    width: 559px;
+    max-width: 559px;
     margin: 0;
     color: $color-text-secondary;
     font-size: 20px;
@@ -138,6 +148,8 @@
   }
 
   // 連絡パネル
+  // Figma の 477×544px を上限・最小高さにする。1440px（全体1085px）で477px、
+  // それより狭い時は左カラムとの比率（477 : 568）を保って縮み、文字を折り返す
   &__cta {
     display: flex;
     flex: none;
@@ -146,11 +158,13 @@
     justify-content: center;
     gap: 43px;
     box-sizing: border-box;
-    width: 477px;
-    height: 544px;
+    width: calc((100% - 40px) * 477 / 1045);
+    min-height: 544px;
     padding: 44px 36px;
     border-radius: 16px;
     background-color: $color-pale-red;
+    // 折り返した時も各行を中央に揃える
+    text-align: center;
 
     @include sp {
       order: 1;
@@ -160,13 +174,16 @@
       width: 100%;
       max-width: 477px;
       margin: 0 auto;
-      height: auto;
+      min-height: 0;
       padding: 20px 20px;
       border-radius: 10px;
       background-color: $color-pale-pink;
     }
 
+    // パネルが縮んだ時もボタンがはみ出さない
     .button {
+      max-width: 100%;
+
       @include sp {
         width: 100%;
         font-size: 16px;
@@ -208,23 +225,33 @@
     }
   }
 
+  // 番号の途中では折り返さない（「[電話番号：」の後で折り返す）
+  &__tel-number {
+    white-space: nowrap;
+  }
+
   &__tel-link {
     color: inherit;
     text-decoration: none;
   }
 
+  // Figma 上でも文字幅（408px）がパネルの内寸（405px）を超えるため、パネルの左右の
+  // 余白（36px）まで使ってよいことにする（1440pxで1行）。狭い時は「／」の後で折り返す
   &__hours {
-    margin: 0;
+    margin: 0 -36px;
     color: $color-text-meta;
     font-size: 20px;
     font-weight: $font-weight-bold;
     line-height: 24px;
-    // Figma 上でも文字幅（408px）がパネルの内寸（405px）を超えるが、折り返さない
-    white-space: nowrap;
 
     @include sp {
+      margin: 0;
       font-size: 13px;
       line-height: 16px;
     }
+  }
+
+  &__hours-part {
+    display: inline-block;
   }
 }
